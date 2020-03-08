@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical"
+android:layout_width="match_parent"
+android:layout_height="match_parent">
+  <LinearLayout
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  android:weightSum="1"
+  android:id="@+id/linearLayout1">
+    <Toolbar
+    android:minHeight="?android:attr/actionBarSize"
+    android:background="?android:attr/colorPrimary"
+    android:minWidth="25sp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/toolbar1"
+    android:title="Cardinal Scout"
+    android:titleTextColor="#ffffffff"
+    android:subtitleTextColor="#ffdec5c5" />
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.02"
+    android:id="@+id/linearLayout1" />
+    <LinearLayout
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.96"
+    android:weightSum="1"
+    android:id="@+id/linearLayout1">
+      <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="0dp"
+      android:layout_height="fill_parent"
+      android:layout_weight="0.03"
+      android:id="@+id/linearLayout1" />
+      <LinearLayout
+      android:orientation="vertical"
+      android:layout_width="0dp"
+      android:layout_height="match_parent"
+      android:layout_weight="0.94"
+      android:weightSum="1"
+      android:id="@+id/linearLayout1">
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:id="@+id/linearLayout1">
+          <Button
+          android:text="Edit Events"
+          android:textSize="20sp"
+          android:textStyle="bold"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/bEditEvent" />
+        </LinearLayout>
+        <ScrollView
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.75"
+        android:id="@+id/linearLayout1">
+          <LinearLayout
+          android:orientation="vertical"
+          android:layout_width="fill_parent"
+          android:layout_height="fill_parent"
+          android:id="@+id/linearLayout1">
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recentMatches"
+            android:padding="5dp"
+            android:text="Privacy Policy"
+            android:textColor="@android:color/black"
+            android:textStyle="bold"
+            android:textSize="30sp" />
+            <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/recentMatches"
+            android:paddingLeft="30dp"
+            android:text="@string/instructions"
+            android:textColor="@android:color/black"
+            android:textSize="20sp" />
+          </LinearLayout>
+        </ScrollView>
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.15"
+        android:id="@+id/linearLayout1">
+          <Button
+          android:text="FACTORY RESET APP"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:id="@+id/bDelete"
+          android:textColor="@android:color/white"
+          android:backgroundTint="#ffff0000"
+          android:textSize="25sp" />
+        </LinearLayout>
+      </LinearLayout>
+      <LinearLayout
+      android:orientation="horizontal"
+      android:layout_width="0dp"
+      android:layout_height="fill_parent"
+      android:layout_weight="0.03"
+      android:id="@+id/linearLayout1" />
+    </LinearLayout>
+    <LinearLayout
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.02"
+    android:id="@+id/linearLayout1" />
+  </LinearLayout>
+</RelativeLayout>
