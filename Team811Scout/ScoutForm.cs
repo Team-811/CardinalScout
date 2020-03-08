@@ -11,33 +11,43 @@ namespace Team811Scout
     [Activity(Label = "ScoutForm", Theme = "@style/AppTheme", MainLauncher = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     internal class ScoutForm: Activity
     {
-        //declare objects that wil refer to controls
+        //declare objects that will refer to controls
         private TextView textTitle;
 
         private EditText vMatchNumber;
         private EditText vTeamNumber;
-        private Spinner position;
+        private Spinner vPosition;
         private CheckBox table;
-        private RadioGroup radioLevel;
-        private RadioGroup radioSandstorm;
-        private CheckBox sandCargo;
-        private CheckBox sandHatch;
-        private CheckBox sandHab;
-        private CheckBox cargo;
-        private CheckBox cargoWell;
-        private CheckBox cargoBarely;
-        private CheckBox hatch;
-        private CheckBox hatchWell;
-        private CheckBox hatchBarely;
-        private RadioGroup radioClimb;
+
+        private CheckBox initiationLine;
+        private RadioGroup radioAuto;
+
+        private CheckBox shoot;
+        private CheckBox outer;
+        private CheckBox inner;
+        private CheckBox lower;
+        private CheckBox shootWell;
+        private CheckBox shootBarely;
+        private CheckBox shootTrench;
+        private CheckBox shootInitiation;
+        private CheckBox shootPort;
+
+        private CheckBox climb;
+        private CheckBox readjust;
+
+        private CheckBox wheel;
+        private CheckBox rotation;
+        private CheckBox position;
+
+        private CheckBox under;
+
         private RadioGroup radioDrivers;
         private RadioGroup radioRecommend;
         private RadioGroup radioResult;
         private MultiAutoCompleteTextView comments;
         private Button bFinish;
-        private int sandstormMode = 2;
-        private int sandLevel = 1;
-        private int climb = 0;
+
+        private int auto = 0;
         private bool goodDrivers = false;
         private int wouldRecommend = 1;
         private int result = 1;
@@ -58,30 +68,42 @@ namespace Team811Scout
             textTitle = FindViewById<TextView>(Resource.Id.textEventTitle);
             vMatchNumber = FindViewById<EditText>(Resource.Id.vMatchNumber);
             vTeamNumber = FindViewById<EditText>(Resource.Id.vTeamNumber);
-            position = FindViewById<Spinner>(Resource.Id.vPosition);
-            position.ItemSelected += SpinnerClick;
+            vPosition = FindViewById<Spinner>(Resource.Id.vPosition);
+            vPosition.ItemSelected += SpinnerClick;
             table = FindViewById<CheckBox>(Resource.Id.table);
-            radioLevel = FindViewById<RadioGroup>(Resource.Id.radioLevel);
-            radioLevel.CheckedChange += RadioClicked;
-            radioSandstorm = FindViewById<RadioGroup>(Resource.Id.radioSandstorm);
-            radioSandstorm.CheckedChange += RadioClicked;
-            sandCargo = FindViewById<CheckBox>(Resource.Id.sandCargo);
-            sandHatch = FindViewById<CheckBox>(Resource.Id.sandHatch);
-            sandHab = FindViewById<CheckBox>(Resource.Id.sandHab);
-            cargo = FindViewById<CheckBox>(Resource.Id.cargo);
-            cargo.CheckedChange += CheckboxClicked;
-            cargoWell = FindViewById<CheckBox>(Resource.Id.cargoWell);
-            cargoWell.CheckedChange += CheckboxClicked;
-            cargoBarely = FindViewById<CheckBox>(Resource.Id.cargoBarely);
-            cargoBarely.CheckedChange += CheckboxClicked;
-            hatch = FindViewById<CheckBox>(Resource.Id.hatch);
-            hatch.CheckedChange += CheckboxClicked;
-            hatchWell = FindViewById<CheckBox>(Resource.Id.hatchWell);
-            hatchWell.CheckedChange += CheckboxClicked;
-            hatchBarely = FindViewById<CheckBox>(Resource.Id.hatchBarely);
-            hatchBarely.CheckedChange += CheckboxClicked;
-            radioClimb = FindViewById<RadioGroup>(Resource.Id.radioClimb);
-            radioClimb.CheckedChange += RadioClicked;
+            initiationLine = FindViewById<CheckBox>(Resource.Id.initiation);
+            radioAuto = FindViewById<RadioGroup>(Resource.Id.radioAuto);
+            radioAuto.CheckedChange += RadioClicked;
+            shoot = FindViewById<CheckBox>(Resource.Id.shoot);
+            shoot.CheckedChange += CheckboxClicked;
+            outer = FindViewById<CheckBox>(Resource.Id.outer);
+            outer.CheckedChange += CheckboxClicked;
+            inner = FindViewById<CheckBox>(Resource.Id.inner);
+            inner.CheckedChange += CheckboxClicked;
+            lower = FindViewById<CheckBox>(Resource.Id.lower);
+            lower.CheckedChange += CheckboxClicked;
+            shootWell = FindViewById<CheckBox>(Resource.Id.shootWell);
+            shootWell.CheckedChange += CheckboxClicked;
+            shootBarely = FindViewById<CheckBox>(Resource.Id.shootBarely);
+            shootBarely.CheckedChange += CheckboxClicked;
+            shootTrench = FindViewById<CheckBox>(Resource.Id.shootTrench);
+            shootTrench.CheckedChange += CheckboxClicked;
+            shootInitiation = FindViewById<CheckBox>(Resource.Id.shootInitiation);
+            shootInitiation.CheckedChange += CheckboxClicked;
+            shootPort = FindViewById<CheckBox>(Resource.Id.shootPort);
+            shootPort.CheckedChange += CheckboxClicked;
+            climb = FindViewById<CheckBox>(Resource.Id.climb);
+            climb.CheckedChange += CheckboxClicked;
+            readjust = FindViewById<CheckBox>(Resource.Id.readjust);
+            readjust.CheckedChange += CheckboxClicked;
+            wheel = FindViewById<CheckBox>(Resource.Id.wheel);
+            wheel.CheckedChange += CheckboxClicked;
+            rotation = FindViewById<CheckBox>(Resource.Id.rotationC);
+            rotation.CheckedChange += CheckboxClicked;
+            position = FindViewById<CheckBox>(Resource.Id.positionC);
+            position.CheckedChange += CheckboxClicked;
+            under = FindViewById<CheckBox>(Resource.Id.under);
+            under.CheckedChange += CheckboxClicked;
             radioDrivers = FindViewById<RadioGroup>(Resource.Id.radioDrivers);
             radioDrivers.CheckedChange += RadioClicked;
             radioRecommend = FindViewById<RadioGroup>(Resource.Id.radioRecommend);
@@ -94,7 +116,7 @@ namespace Team811Scout
             //put positions into dropdown
             string[] positions = new string[] { "Red 1", "Red 2", "Red 3", "Blue 1", "Blue 2", "Blue 3" };
             ArrayAdapter posAdapt = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleListItem1, positions);
-            position.Adapter = posAdapt;
+            vPosition.Adapter = posAdapt;
             //get current event and set title text
             currentEvent = eData.GetCurrentEvent();
             textTitle.Text += currentEvent.eventName + "'";
@@ -115,18 +137,23 @@ namespace Team811Scout
                     int.Parse(vTeamNumber.Text),
                     spinnerIndex,
                     table.Checked,
-                    sandstormMode,
-                    sandHatch.Checked,
-                    sandCargo.Checked,
-                    sandHab.Checked,
-                    sandLevel,
-                    cargo.Checked,
-                    cargoWell.Checked,
-                    cargoBarely.Checked,
-                    hatch.Checked,
-                    hatchWell.Checked,
-                    hatchBarely.Checked,
-                    climb,
+                    initiationLine.Checked,
+                    auto,
+                    shoot.Checked,
+                    outer.Checked,
+                    inner.Checked,
+                    lower.Checked,
+                    shootWell.Checked,
+                    shootBarely.Checked,
+                    shootTrench.Checked,
+                    shootInitiation.Checked,
+                    shootPort.Checked,
+                    climb.Checked,
+                    readjust.Checked,
+                    wheel.Checked,
+                    rotation.Checked,
+                    position.Checked,
+                    under.Checked,
                     goodDrivers,
                     wouldRecommend,
                     result,
@@ -169,13 +196,9 @@ namespace Team811Scout
             clickedButton.Checked = true;
             int childIndex = selectedGroup.IndexOfChild(clickedButton);
             //device which group was modified
-            if (selectedGroup == radioSandstorm)
+            if (selectedGroup == radioAuto)
             {
-                sandstormMode = selectedGroup.IndexOfChild(clickedButton);
-            }
-            else if (selectedGroup == radioLevel)
-            {
-                sandLevel = childIndex + 1;
+                auto = childIndex;
             }
             else if (selectedGroup == radioDrivers)
             {
@@ -186,21 +209,6 @@ namespace Team811Scout
                 else
                 {
                     goodDrivers = false;
-                }
-            }
-            else if (selectedGroup == radioClimb)
-            {
-                if (childIndex == 0)
-                {
-                    climb = 2;
-                }
-                else if (childIndex == 1)
-                {
-                    climb = 3;
-                }
-                else
-                {
-                    climb = 0;
                 }
             }
             else if (selectedGroup == radioRecommend)
@@ -216,25 +224,28 @@ namespace Team811Scout
         private void CheckboxClicked(object sender, EventArgs e)
         {
             CheckBox clicked = sender as CheckBox;
-            if (clicked == hatchBarely || clicked == hatchWell && clicked.Checked)
+            if ((clicked == rotation || wheel == position) && clicked.Checked)
             {
-                hatch.Checked = true;
+                wheel.Checked = true;
             }
-            else if (clicked == cargoBarely || clicked == cargoWell && clicked.Checked)
+            else if ((clicked == outer || clicked == inner || clicked == lower || clicked == shootWell || clicked == shootBarely || clicked == shootTrench || clicked == shootInitiation) && clicked.Checked)
             {
-                cargo.Checked = true;
+                shoot.Checked = true;
             }
-            else if (clicked == cargo && !clicked.Checked)
+            else if (clicked == wheel && !clicked.Checked)
             {
-                cargoBarely.Checked = false;
-                cargoWell.Checked = false;
-                clicked.Checked = false;
+                rotation.Checked = false;
+                position.Checked = false;                
             }
-            else if (clicked == hatch && !clicked.Checked)
+            else if (clicked == shoot && !clicked.Checked)
             {
-                hatchBarely.Checked = false;
-                hatchWell.Checked = false;
-                clicked.Checked = false;
+                outer.Checked = false;
+                inner.Checked = false;
+                lower.Checked = false;
+                shootWell.Checked = false;
+                shootBarely.Checked = false;
+                shootTrench.Checked = false;
+                shootInitiation.Checked = false;
             }
         }
     }

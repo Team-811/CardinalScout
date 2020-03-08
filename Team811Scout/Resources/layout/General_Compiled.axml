@@ -73,12 +73,9 @@ android:layout_height="match_parent">
         android:layout_weight="0.85"
         android:id="@+id/linearLayout1">
           <HorizontalScrollView
-          android:layout_width="match_parent"
+          android:layout_width="wrap_content"
           android:layout_height="fill_parent"
-          android:layout_below="@+id/seatLegendLayout">
-            <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+          android:layout_below="@+id/seatLegendLayout">            
               <LinearLayout
               android:id="@+id/viewDataHeight"
               android:layout_width="wrap_content"
@@ -86,17 +83,16 @@ android:layout_height="match_parent">
               android:orientation="horizontal">
                 <GridView
                 android:id="@+id/gridViewTeam"
-                android:numColumns="7"
-                android:layout_width="fill_parent"
+                android:numColumns="8"				
+                android:layout_width="1500dp"
                 android:layout_height="fill_parent"
                 android:layout_margin="4dp"
                 android:gravity="center|center_vertical"
-                android:horizontalSpacing="5dp"
+                android:horizontalSpacing="15dp"
                 android:scrollbars="horizontal"
                 android:verticalSpacing="1dp">
                 </GridView>
-              </LinearLayout>
-            </FrameLayout>
+              </LinearLayout>            
           </HorizontalScrollView>
         </LinearLayout>
         <LinearLayout

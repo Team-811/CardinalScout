@@ -8401,15 +8401,6 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c00f3
 			public const int cancel_action = 2131493107;
 			
-			// aapt resource value: 0x7f0c0116
-			public const int cargo = 2131493142;
-			
-			// aapt resource value: 0x7f0c0118
-			public const int cargoBarely = 2131493144;
-			
-			// aapt resource value: 0x7f0c0117
-			public const int cargoWell = 2131493143;
-			
 			// aapt resource value: 0x7f0c004c
 			public const int center = 2131492940;
 			
@@ -8431,14 +8422,8 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c00fb
 			public const int chronometer = 2131493115;
 			
-			// aapt resource value: 0x7f0c011f
-			public const int climb0 = 2131493151;
-			
-			// aapt resource value: 0x7f0c011d
-			public const int climb2 = 2131493149;
-			
-			// aapt resource value: 0x7f0c011e
-			public const int climb3 = 2131493150;
+			// aapt resource value: 0x7f0c011a
+			public const int climb = 2131493146;
 			
 			// aapt resource value: 0x7f0c0055
 			public const int clip_horizontal = 2131492949;
@@ -8563,26 +8548,17 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c00d2
 			public const int gridRecent = 2131493074;
 			
+			// aapt resource value: 0x7f0c013f
+			public const int gridViewAuto = 2131493183;
+			
 			// aapt resource value: 0x7f0c0141
 			public const int gridViewMatches = 2131493185;
-			
-			// aapt resource value: 0x7f0c013f
-			public const int gridViewSandstorm = 2131493183;
 			
 			// aapt resource value: 0x7f0c013e
 			public const int gridViewStats = 2131493182;
 			
 			// aapt resource value: 0x7f0c00bd
 			public const int gridViewTeam = 2131493053;
-			
-			// aapt resource value: 0x7f0c0119
-			public const int hatch = 2131493145;
-			
-			// aapt resource value: 0x7f0c011b
-			public const int hatchBarely = 2131493147;
-			
-			// aapt resource value: 0x7f0c011a
-			public const int hatchWell = 2131493146;
 			
 			// aapt resource value: 0x7f0c0005
 			public const int home = 2131492869;
@@ -8613,6 +8589,12 @@ namespace Team811Scout
 			
 			// aapt resource value: 0x7f0c00fc
 			public const int info = 2131493116;
+			
+			// aapt resource value: 0x7f0c010c
+			public const int initiation = 2131493132;
+			
+			// aapt resource value: 0x7f0c0113
+			public const int inner = 2131493139;
 			
 			// aapt resource value: 0x7f0c0060
 			public const int italic = 2131492960;
@@ -8649,6 +8631,9 @@ namespace Team811Scout
 			
 			// aapt resource value: 0x7f0c0068
 			public const int list_item = 2131492968;
+			
+			// aapt resource value: 0x7f0c0114
+			public const int lower = 2131493140;
 			
 			// aapt resource value: 0x7f0c0102
 			public const int main_appbar = 2131493122;
@@ -8776,6 +8761,9 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c00f7
 			public const int notification_main_column_container = 2131493111;
 			
+			// aapt resource value: 0x7f0c0112
+			public const int outer = 2131493138;
+			
 			// aapt resource value: 0x7f0c0053
 			public const int parallax = 2131492947;
 			
@@ -8788,6 +8776,9 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c0054
 			public const int pin = 2131492948;
 			
+			// aapt resource value: 0x7f0c011e
+			public const int positionC = 2131493150;
+			
 			// aapt resource value: 0x7f0c0006
 			public const int progress_circular = 2131492870;
 			
@@ -8797,20 +8788,20 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c007c
 			public const int radio = 2131492988;
 			
-			// aapt resource value: 0x7f0c0110
-			public const int radioAuto = 2131493136;
+			// aapt resource value: 0x7f0c010f
+			public const int radio13 = 2131493135;
 			
-			// aapt resource value: 0x7f0c011c
-			public const int radioClimb = 2131493148;
+			// aapt resource value: 0x7f0c0110
+			public const int radio4plus = 2131493136;
+			
+			// aapt resource value: 0x7f0c010d
+			public const int radioAuto = 2131493133;
 			
 			// aapt resource value: 0x7f0c0120
 			public const int radioDrivers = 2131493152;
 			
-			// aapt resource value: 0x7f0c010c
-			public const int radioLevel = 2131493132;
-			
-			// aapt resource value: 0x7f0c0112
-			public const int radioNothing = 2131493138;
+			// aapt resource value: 0x7f0c010e
+			public const int radioNone = 2131493134;
 			
 			// aapt resource value: 0x7f0c0123
 			public const int radioRecommend = 2131493155;
@@ -8818,11 +8809,8 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c0127
 			public const int radioResult = 2131493159;
 			
-			// aapt resource value: 0x7f0c010f
-			public const int radioSandstorm = 2131493135;
-			
-			// aapt resource value: 0x7f0c0111
-			public const int radioTeleop = 2131493137;
+			// aapt resource value: 0x7f0c011b
+			public const int readjust = 2131493147;
 			
 			// aapt resource value: 0x7f0c0126
 			public const int recMaybe = 2131493158;
@@ -8857,14 +8845,8 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c00f9
 			public const int right_side = 2131493113;
 			
-			// aapt resource value: 0x7f0c0113
-			public const int sandCargo = 2131493139;
-			
-			// aapt resource value: 0x7f0c0115
-			public const int sandHab = 2131493141;
-			
-			// aapt resource value: 0x7f0c0114
-			public const int sandHatch = 2131493140;
+			// aapt resource value: 0x7f0c011d
+			public const int rotationC = 2131493149;
 			
 			// aapt resource value: 0x7f0c000c
 			public const int save_image_matrix = 2131492876;
@@ -8944,6 +8926,24 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c0135
 			public const int shellcontent_toolbar = 2131493173;
 			
+			// aapt resource value: 0x7f0c0111
+			public const int shoot = 2131493137;
+			
+			// aapt resource value: 0x7f0c0116
+			public const int shootBarely = 2131493142;
+			
+			// aapt resource value: 0x7f0c0118
+			public const int shootInitiation = 2131493144;
+			
+			// aapt resource value: 0x7f0c0119
+			public const int shootPort = 2131493145;
+			
+			// aapt resource value: 0x7f0c0117
+			public const int shootTrench = 2131493143;
+			
+			// aapt resource value: 0x7f0c0115
+			public const int shootWell = 2131493141;
+			
 			// aapt resource value: 0x7f0c007b
 			public const int shortcut = 2131492987;
 			
@@ -8988,12 +8988,6 @@ namespace Team811Scout
 			
 			// aapt resource value: 0x7f0c0052
 			public const int start = 2131492946;
-			
-			// aapt resource value: 0x7f0c010d
-			public const int start1 = 2131493133;
-			
-			// aapt resource value: 0x7f0c010e
-			public const int start2 = 2131493134;
 			
 			// aapt resource value: 0x7f0c00a0
 			public const int startDate = 2131493024;
@@ -9112,6 +9106,9 @@ namespace Team811Scout
 			// aapt resource value: 0x7f0c009d
 			public const int txtEventName = 2131493021;
 			
+			// aapt resource value: 0x7f0c011f
+			public const int under = 2131493151;
+			
 			// aapt resource value: 0x7f0c0035
 			public const int uniform = 2131492917;
 			
@@ -9141,6 +9138,9 @@ namespace Team811Scout
 			
 			// aapt resource value: 0x7f0c00e7
 			public const int volume_item_container = 2131493095;
+			
+			// aapt resource value: 0x7f0c011c
+			public const int wheel = 2131493148;
 			
 			// aapt resource value: 0x7f0c0022
 			public const int wide = 2131492898;

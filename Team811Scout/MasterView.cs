@@ -127,28 +127,33 @@ namespace Team811Scout
                     }
                 }
                 //add data from the master device
-                List<MatchData> scoutListArray = eData.GetMatchDataForEvent(selectedEvent.eventID);
-                for (int i = 0; i < scoutListArray.Count; i++)
+                List<MatchData> scoutList = eData.GetMatchDataForEvent(selectedEvent.eventID);
+                for (int i = 0; i < scoutList.Count; i++)
                 {
-                    concatedQR += scoutListArray[i].teamNumber.ToString() + "," +
-                      scoutListArray[i].matchNumber.ToString() + "," +
-                      scoutListArray[i].result.ToString() +
-                      scoutListArray[i].position.ToString() +
-                      Convert.ToByte(scoutListArray[i].isTable).ToString() +
-                      scoutListArray[i].sandstormStartLevel.ToString() +
-                      scoutListArray[i].sandstormMode.ToString() +
-                      Convert.ToByte(scoutListArray[i].sandstormHatch).ToString() +
-                      Convert.ToByte(scoutListArray[i].sandstormCargo).ToString() +
-                      Convert.ToByte(scoutListArray[i].sandstormLine).ToString() +
-                      Convert.ToByte(scoutListArray[i].cargo).ToString() +
-                      Convert.ToByte(scoutListArray[i].cargoWell).ToString() +
-                      Convert.ToByte(scoutListArray[i].cargoBarely).ToString() +
-                      Convert.ToByte(scoutListArray[i].hatch).ToString() +
-                      Convert.ToByte(scoutListArray[i].hatchWell).ToString() +
-                      Convert.ToByte(scoutListArray[i].hatchBarely).ToString() +
-                      scoutListArray[i].climb.ToString() +
-                      Convert.ToByte(scoutListArray[i].goodDrivers).ToString() +
-                      scoutListArray[i].wouldRecommend.ToString();
+                    concatedQR += scoutList[i].teamNumber.ToString() + "," +
+                        scoutList[i].matchNumber.ToString() + "," +
+                        scoutList[i].result.ToString() +
+                        scoutList[i].position.ToString() +
+                        Convert.ToByte(scoutList[i].isTable).ToString() +
+                        Convert.ToByte(scoutList[i].initiationCrossed).ToString() +
+                        scoutList[i].auto.ToString() +
+                        Convert.ToByte(scoutList[i].shoot).ToString() +
+                        Convert.ToByte(scoutList[i].shootOuter).ToString() +
+                        Convert.ToByte(scoutList[i].shootInner).ToString() +
+                        Convert.ToByte(scoutList[i].shootLower).ToString() +
+                        Convert.ToByte(scoutList[i].shootWell).ToString() +
+                        Convert.ToByte(scoutList[i].shootBarely).ToString() +
+                        Convert.ToByte(scoutList[i].shootTrench).ToString() +
+                        Convert.ToByte(scoutList[i].shootLine).ToString() +
+                        Convert.ToByte(scoutList[i].shootPort).ToString() +
+                        Convert.ToByte(scoutList[i].climb).ToString() +
+                        Convert.ToByte(scoutList[i].adjustClimb).ToString() +
+                        Convert.ToByte(scoutList[i].wheel).ToString() +
+                        Convert.ToByte(scoutList[i].rotationControl).ToString() +
+                        Convert.ToByte(scoutList[i].positionControl).ToString() +
+                        Convert.ToByte(scoutList[i].underTrench).ToString() +
+                        Convert.ToByte(scoutList[i].goodDrivers).ToString() +
+                        scoutList[i].wouldRecommend.ToString();
                 }
                 //make sure there is some data
                 if (concatedQR != null)
@@ -193,7 +198,6 @@ namespace Team811Scout
                 {
                 });
                 missingDetails.Show();
-                
             }
         }
 

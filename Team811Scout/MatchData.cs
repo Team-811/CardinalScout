@@ -23,18 +23,28 @@ namespace Team811Scout
             int teamNum,
             int pos,
             bool table,
-            int Mode,
-            bool sHatch,
-            bool sCargo,
+            bool initiation,
+            int autoResult,
+
+            bool s,
+            bool sOuter,
+            bool sInner,
+            bool sLower,
+            bool sWell,
+            bool sBarely,
+            bool sTrench,
             bool sLine,
-            int StartLevel,
-            bool c,
-            bool cWell,
-            bool cBarely,
-            bool h,
-            bool hWell,
-            bool hBarely,
-            int clim,
+            bool sPort,
+
+            bool climb,
+            bool adjust,
+
+            bool cWheel,
+            bool rControl,
+            bool pControl,
+
+            bool under,
+
             bool Drivers,
             int Recommend,
             int res,
@@ -51,18 +61,25 @@ namespace Team811Scout
             teamNumber = teamNum;
             position = pos;
             isTable = table;
-            sandstormMode = Mode;
-            sandstormHatch = sHatch;
-            sandstormCargo = sCargo;
-            sandstormLine = sLine;
-            sandstormStartLevel = StartLevel;
-            cargo = c;
-            cargoWell = cWell;
-            cargoBarely = cBarely;
-            hatch = h;
-            hatchWell = hWell;
-            hatchBarely = hBarely;
-            climb = clim;
+            initiationCrossed = initiation;
+            auto = autoResult;
+
+            shoot = s;
+            shootOuter = sOuter;
+            shootInner = sInner;
+            shootLower = sLower;
+            shootWell = sWell;
+            shootBarely = sBarely;
+            shootTrench = sTrench;
+            shootLine = sLine;
+            shootPort = sPort;
+
+            wheel = cWheel;
+            rotationControl = rControl;
+            positionControl = pControl;
+
+            underTrench = under;            
+
             goodDrivers = Drivers;
             wouldRecommend = Recommend;
             result = res;
@@ -109,56 +126,45 @@ namespace Team811Scout
         }
 
         public bool isTable { get; set; }
-        public int sandstormMode { get; set; }
+        public bool initiationCrossed { get; set; }
+        public int auto { get; set; }
 
-        //0 - auto, 1 - camera, 2 - nothing
+        //0 - 0 balls, 1 - 1-3 balls, 2 - 4+ balls
         //string representation of sandstorm mode
-        public string getSandstormMode()
+        public string getAuto()
         {
-            if (sandstormMode == 0)
+            if (auto == 0)
             {
-                return "Auto";
+                return "0 Balls";
             }
-            else if (sandstormMode == 1)
+            else if (auto == 1)
             {
-                return "Teleop w/Camera";
+                return "1-3 Balls";
             }
             else
             {
-                return "Nothing";
+                return "4+ Balls";
             }
-        }
+        }       
 
-        public bool sandstormHatch { get; set; }
-        public bool sandstormCargo { get; set; }
-        public bool sandstormLine { get; set; }
-        public int sandstormStartLevel { get; set; }
-        //1,2
+        public bool shoot { get; set; }
+        public bool shootOuter { get; set; }
+        public bool shootInner { get; set; }        
+        public bool shootLine { get; set; }
+        public bool shootWell { get; set; }
+        public bool shootBarely { get; set; }
+        public bool shootLower { get; set; }
+        public bool shootTrench { get; set; }
+        public bool shootPort { get; set; }
 
-        public bool cargo { get; set; }
-        public bool cargoWell { get; set; }
-        public bool cargoBarely { get; set; }
-        public bool hatch { get; set; }
-        public bool hatchWell { get; set; }
-        public bool hatchBarely { get; set; }
-        public int climb { get; set; }
+        public bool climb { get; set; }
+        public bool adjustClimb { get; set; }
 
-        //string for climb level
-        public string getClimb()
-        {
-            if (climb == 2)
-            {
-                return "Level 2";
-            }
-            else if (climb == 3)
-            {
-                return "Level 3";
-            }
-            else
-            {
-                return "No Climb";
-            }
-        }
+        public bool wheel { get; set; }
+        public bool rotationControl { get; set; }
+        public bool positionControl { get; set; }
+
+        public bool underTrench { get; set; }  
 
         public bool goodDrivers { get; set; }
         public int wouldRecommend { get; set; }

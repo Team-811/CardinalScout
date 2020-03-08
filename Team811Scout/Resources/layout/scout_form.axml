@@ -122,7 +122,7 @@ android:layout_height="match_parent">
             android:textColor="#ffea1717"
             android:layout_marginTop="15dp" />
             <TextView
-            android:text="Started Off Level:"
+            android:text="Autonomous"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textTitle"
@@ -131,68 +131,45 @@ android:layout_height="match_parent">
             android:textStyle="bold"
             android:textAlignment="center"
             android:layout_marginTop="15dp" />
+			<CheckBox
+            android:text="Moved Off Initiation Line"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/initiation"
+            android:textAllCaps="false"            
+            android:textSize="25sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp" />
             <RadioGroup
             android:minWidth="25px"
             android:minHeight="25px"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radioLevel">
+            android:id="@+id/radioAuto">
               <RadioButton
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="1"
-              android:id="@+id/start1"
+              android:text="Scored 0 Balls"
+              android:id="@+id/radioNone"
               android:textSize="25sp"
               android:layout_marginBottom="5dp" />
               <RadioButton
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="2"
-              android:id="@+id/start2"
-              android:textSize="25sp" />
-            </RadioGroup>
+              android:text="Scored 1-3 Balls"
+              android:id="@+id/radio13"
+              android:textSize="25sp"
+              android:layout_marginBottom="5dp" />
+			  <RadioButton
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:text="Scored 4+ Balls"
+              android:id="@+id/radio4plus"
+              android:textSize="25sp"
+              android:layout_marginBottom="5dp" />
+            </RadioGroup>           
             <TextView
-            android:text="Mode For Sandstorm (closest)"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textTitle"
-            android:textSize="25sp"
-            android:textColor="#ff000000"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="5dp" />
-            <RadioGroup
-            android:minWidth="25px"
-            android:minHeight="25px"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioSandstorm">
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Autonomous"
-              android:id="@+id/radioAuto"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp"
-              android:layout_marginTop="5dp" />
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Teleop w/Camera"
-              android:id="@+id/radioTeleop"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp" />
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Nothing"
-              android:id="@+id/radioNothing"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp" />
-            </RadioGroup>
-            <TextView
-            android:text="During Sandstorm:"
+            android:text="Can They:"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/textTitle"
@@ -202,143 +179,150 @@ android:layout_height="match_parent">
             android:textAlignment="center"
             android:layout_marginTop="15dp" />
             <CheckBox
-            android:text="Placed Cargo"
+            android:text="Shoot?"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/sandCargo"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp" />
-            <CheckBox
-            android:text="Placed Hatch"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sandHatch"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp" />
-            <CheckBox
-            android:text="Crossed Hab Line"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/sandHab"
-            android:textAllCaps="false"
-            android:textStyle="bold"
-            android:textSize="25sp"
-            android:layout_marginTop="15dp"
-            android:layout_marginBottom="20dp" />
-            <TextView
-            android:text="Can They Do:"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/textTitle"
-            android:textSize="25sp"
-            android:textColor="#ff000000"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_marginTop="15dp" />
-            <CheckBox
-            android:text="Cargo?"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/cargo"
+            android:id="@+id/shoot"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp" />
             <CheckBox
-            android:text="Very Well?"
+            android:text="Outer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/cargoWell"
+            android:id="@+id/outer"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
+            android:layout_marginTop="5dp" />
             <CheckBox
-            android:text="Barely?"
+            android:text="Inner"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/cargoBarely"
+            android:id="@+id/inner"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
+             />
+			<CheckBox
+            android:text="Lower"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lower"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Well"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shootWell"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Barely"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shootBarely"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"            
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Shoot from trench"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shootTrench"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Shoot from initiation line/nearby"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shootInitiation"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"            
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Shoot from against the power port wall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/shootPort"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"            
+            android:layout_marginBottom="10dp" />			
             <CheckBox
-            android:text="Hatches?"
+            android:text="Climb?"
             android:layout_width="235.0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/hatch"
+            android:id="@+id/climb"
             android:textAllCaps="false"
             android:textStyle="bold"
             android:textSize="25sp"
             android:layout_marginTop="15dp"
             android:layout_marginBottom="5dp" />
             <CheckBox
-            android:text="Very Well?"
-            android:layout_width="235.0dp"
+            android:text="Can adjust on bar?"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/hatchWell"
+            android:id="@+id/readjust"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp" />
-            <CheckBox
-            android:text="Barely?"
+			<CheckBox
+            android:text="Color Wheel?"
             android:layout_width="235.0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/hatchBarely"
+            android:id="@+id/wheel"
             android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp" />
-            <TextView
-            android:text="Climb:"
-            android:layout_width="match_parent"
-            android:layout_height="56.0dp"
-            android:id="@+id/textTitle"
-            android:textSize="25sp"
-            android:textColor="#ff000000"
             android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_marginTop="15dp" />
-            <RadioGroup
-            android:minWidth="25px"
-            android:minHeight="25px"
+            android:textSize="25sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp" />
+            <CheckBox
+            android:text="Rotation Control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/rotationC"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Position Control"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/positionC"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            android:layout_marginLeft="25dp"            
+            android:layout_marginBottom="10dp" />
+			<CheckBox
+            android:text="Fits under the trench run (color wheel)?"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/radioClimb">
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Level 2"
-              android:id="@+id/climb2"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp" />
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="Level 3"
-              android:id="@+id/climb3"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp" />
-              <RadioButton
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:text="No climb"
-              android:id="@+id/climb0"
-              android:textSize="25sp"
-              android:layout_marginBottom="5dp" />
-            </RadioGroup>
+            android:id="@+id/under"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="5dp" />            
             <TextView
             android:text="Do Drivers Know What They Are Doing? (consider penalties, aggression, etc)"
             android:layout_width="match_parent"

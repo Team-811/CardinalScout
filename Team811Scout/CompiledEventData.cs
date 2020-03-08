@@ -8,6 +8,7 @@ namespace Team811Scout
      * scouted matches for an event from all devices. Compiled Event Data can have all the same properties as
      * a normal MatchData, but it also can perform calculations and figure out percentages*/
 
+
     public class CompiledEventData: MatchData
     {
         public CompiledEventData()
@@ -48,7 +49,7 @@ namespace Team811Scout
         public List<List<CompiledEventData>> compileData()
         {
             //how many properties are we looking for:
-            const int dataLength = 17;
+            const int dataLength = 22;
             CompiledEventData placeholder = new CompiledEventData();
             //list before putting it in team order
             List<CompiledEventData> preOrder = new List<CompiledEventData>();
@@ -69,6 +70,7 @@ namespace Team811Scout
                 placeholder.matchNumber = int.Parse(matchData.Substring(matchCommas[0] + 1, matchCommas[1] - matchCommas[0] - 1));
                 //create substring of data after the commas
                 matchData = matchData.Substring(matchCommas[1] + 1, dataLength);
+
                 //interpret numerical values
                 placeholder.result = int.Parse(matchData.Substring(startIndex, 1));
                 startIndex++;
@@ -76,29 +78,39 @@ namespace Team811Scout
                 startIndex++;
                 placeholder.isTable = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.sandstormStartLevel = int.Parse(matchData.Substring(startIndex, 1));
+                placeholder.initiationCrossed = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.sandstormMode = int.Parse(matchData.Substring(startIndex, 1));
+                placeholder.auto = int.Parse(matchData.Substring(startIndex, 1));
                 startIndex++;
-                placeholder.sandstormHatch = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shoot = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.sandstormCargo = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootOuter = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.sandstormLine = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootInner = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.cargo = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootLower = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.cargoWell = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootWell = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.cargoBarely = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootBarely = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.hatch = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootTrench = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.hatchWell = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootLine = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.hatchBarely = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                placeholder.shootPort = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
-                placeholder.climb = int.Parse(matchData.Substring(startIndex, 1));
+                placeholder.climb = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                startIndex++;
+                placeholder.adjustClimb = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                startIndex++;
+                placeholder.wheel = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                startIndex++;
+                placeholder.rotationControl = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                startIndex++;
+                placeholder.positionControl = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
+                startIndex++;
+                placeholder.underTrench = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
                 placeholder.goodDrivers = Convert.ToBoolean(int.Parse(matchData.Substring(startIndex, 1)));
                 startIndex++;
@@ -163,6 +175,20 @@ namespace Team811Scout
         //Calculations with MatchData
         //Group calculations (arrays of percents/values for all teams in the data)
         //used for display purposes
+
+        //list team numbers that have data
+        public List<int> getTeamNumbersArray()
+        {
+            List<List<CompiledEventData>> c = compileData();
+            List<int> result = new List<int>();
+            for (int i = 0; i < c.Count; i++)
+            {
+                result.Add(c[i][0].teamNumber);
+            }
+            return result;
+        }
+
+        //Percent of scouters who recommended the team
         public List<int> getRecPercentArray()
         {
             List<List<CompiledEventData>> c = compileData();
@@ -183,6 +209,7 @@ namespace Team811Scout
             return recsPerTeam;
         }
 
+        //W-L-T record
         public List<string> getWinRecordArray()
         {
             List<string> recsPerTeam = new List<string>();
@@ -202,6 +229,7 @@ namespace Team811Scout
             return recsPerTeam;
         }
 
+        //Percent of time the team won
         public List<int> getWinPercentArray()
         {
             List<int> recsPerTeam = new List<int>();
@@ -226,7 +254,8 @@ namespace Team811Scout
             return recsPerTeam;
         }
 
-        public List<int> getCargoPercentArray()
+        //Percent of the time the team was able to shoot
+        public List<int> getShootPercentArray()
         {
             List<int> recsPerTeam = new List<int>();
             List<int> recsWellPerTeam = new List<int>();
@@ -237,9 +266,9 @@ namespace Team811Scout
                 List<int> recs = new List<int>();
                 for (int j = 0; j < c[i].Count; j++)
                 {
-                    recs.Add(Convert.ToByte(c[i][j].cargo));
-                    recsWellPerTeam.Add(Convert.ToByte(c[i][j].cargoWell));
-                    recsBarelyPerTeam.Add(Convert.ToByte(c[i][j].cargoBarely));
+                    recs.Add(Convert.ToByte(c[i][j].shoot));
+                    recsWellPerTeam.Add(Convert.ToByte(c[i][j].shootWell));
+                    recsBarelyPerTeam.Add(Convert.ToByte(c[i][j].shootBarely));
                 }
                 double countYes = recs.Where(x => x.Equals(1)).Count();
                 double countNo = recs.Where(x => x.Equals(0)).Count();
@@ -255,75 +284,91 @@ namespace Team811Scout
             return recsPerTeam;
         }
 
-        public List<int> getHatchPercentArray()
+        //Get teams' primary shooting port
+        public List<string> getPrimaryPortArray()
+        {
+            List<int> recsOuter = new List<int>();
+            List<int> recsInner = new List<int>();
+            List<int> recsLower = new List<int>();
+
+            List<string> modes = new List<string>();
+
+            List<List<CompiledEventData>> c = compileData();
+            for (int i = 0; i < c.Count; i++)
+            {
+                for (int j = 0; j < c[i].Count; j++)
+                {
+                    recsOuter.Add(Convert.ToByte(c[i][j].shootOuter));
+                    recsInner.Add(Convert.ToByte(c[i][j].shootInner));
+                    recsLower.Add(Convert.ToByte(c[i][j].shootLower));
+                }
+                double outer = recsOuter.Where(x => x.Equals(1)).Count();
+                double inner = recsInner.Where(x => x.Equals(1)).Count();
+                double lower = recsLower.Where(x => x.Equals(1)).Count();
+
+                if (outer == 0 && inner == 0 && lower == 0)
+                    modes.Add("None");
+                else if (inner > outer && inner > lower)
+                    modes.Add("Inner");
+                else if (lower > inner && lower > outer)
+                    modes.Add("Lower");
+                else
+                    modes.Add("Outer");
+            }
+            return modes;
+        }
+
+        //Percent of the time the team was able to climb
+        public List<int> getClimbPercentArray()
         {
             List<int> recsPerTeam = new List<int>();
-            List<int> recsWellPerTeam = new List<int>();
-            List<int> recsBarelyPerTeam = new List<int>();
             List<List<CompiledEventData>> c = compileData();
             for (int i = 0; i < c.Count; i++)
             {
                 List<int> recs = new List<int>();
                 for (int j = 0; j < c[i].Count; j++)
                 {
-                    recs.Add(Convert.ToByte(c[i][j].hatch));
-                    recsWellPerTeam.Add(Convert.ToByte(c[i][j].hatchWell));
-                    recsBarelyPerTeam.Add(Convert.ToByte(c[i][j].hatchBarely));
+                    recs.Add(Convert.ToByte(c[i][j].climb));
                 }
                 double countYes = recs.Where(x => x.Equals(1)).Count();
                 double countNo = recs.Where(x => x.Equals(0)).Count();
-                double countWell = recsWellPerTeam.Where(x => x.Equals(1)).Count();
-                double countBarely = recsBarelyPerTeam.Where(x => x.Equals(1)).Count();
-                double percent = (countYes + countWell * Constants.well_barelyWeight) / (countYes + countNo + countBarely * Constants.well_barelyWeight) * 100;
-                if (percent > 100)
-                {
-                    percent = 100;
-                }
+                double percent = ((countYes) / (countYes + countNo)) * 100;
                 recsPerTeam.Add((int)Math.Round(percent));
             }
             return recsPerTeam;
         }
 
-        public List<int> getClimb2PercentArray()
+        //Did the team adjust their climb at all
+        public List<bool> getClimbAdjustArray()
         {
-            List<int> recsPerTeam = new List<int>();
+            List<bool> recsPerTeam = new List<bool>();
             List<List<CompiledEventData>> c = compileData();
             for (int i = 0; i < c.Count; i++)
             {
-                List<int> recs = new List<int>();
                 for (int j = 0; j < c[i].Count; j++)
                 {
-                    recs.Add(c[i][j].climb);
+                    recsPerTeam.Add(c[i][j].adjustClimb);
                 }
-                double count2 = recs.Where(x => x.Equals(2)).Count();
-                double count3 = recs.Where(x => x.Equals(3)).Count();
-                double countNone = recs.Where(x => x.Equals(0)).Count();
-                double twoPercent = (count2) / (count2 + count3 + countNone) * 100;
-                recsPerTeam.Add((int)Math.Round(twoPercent));
             }
             return recsPerTeam;
         }
 
-        public List<int> getClimb3PercentArray()
+        //Did the team spin the wheel at all
+        public List<bool> getWheelArray()
         {
-            List<int> recsPerTeam = new List<int>();
+            List<bool> recsPerTeam = new List<bool>();
             List<List<CompiledEventData>> c = compileData();
             for (int i = 0; i < c.Count; i++)
             {
-                List<int> recs = new List<int>();
                 for (int j = 0; j < c[i].Count; j++)
                 {
-                    recs.Add(c[i][j].climb);
+                    recsPerTeam.Add(c[i][j].wheel);
                 }
-                double count2 = recs.Where(x => x.Equals(2)).Count();
-                double count3 = recs.Where(x => x.Equals(3)).Count();
-                double countNone = recs.Where(x => x.Equals(0)).Count();
-                double threePercent = (count3) / (count2 + count3 + countNone) * 100;
-                recsPerTeam.Add((int)Math.Round(threePercent));
             }
             return recsPerTeam;
         }
 
+        //Percent of the time drivers were good
         public List<int> getDriversPercentArray()
         {
             List<int> recsPerTeam = new List<int>();
@@ -343,17 +388,7 @@ namespace Team811Scout
             return recsPerTeam;
         }
 
-        public List<int> getTeamNumbersArray()
-        {
-            List<List<CompiledEventData>> c = compileData();
-            List<int> result = new List<int>();
-            for (int i = 0; i < c.Count; i++)
-            {
-                result.Add(c[i][0].teamNumber);
-            }
-            return result;
-        }
-
+        //Percent of the time a team was not functioning
         public List<int> getTablePercentArray()
         {
             List<int> recsPerTeam = new List<int>();
@@ -390,6 +425,7 @@ namespace Team811Scout
             return c;
         }
 
+        //Percent of scouters who recommended the team
         public int getRecPercentForTeam(int team)
         {
             List<int> recs = new List<int>();
@@ -405,42 +441,14 @@ namespace Team811Scout
             return (int)percent;
         }
 
-        public string getWinRecordForTeam(int team)
+        //Percent of matches a team could shoot
+        public int getShootPercentForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(c[i].result);
-            }
-            int countWin = recs.Where(x => x.Equals(0)).Count();
-            int countLoss = recs.Where(x => x.Equals(1)).Count();
-            int countTie = recs.Where(x => x.Equals(2)).Count();
-            return (countWin.ToString() + "-" + countLoss.ToString() + "-" + countTie.ToString());
-        }
-
-        public int getWinPercentForTeam(int team)
-        {
-            List<int> recs = new List<int>();
-            List<CompiledEventData> c = dataForTeam(team);
-            for (int i = 0; i < c.Count; i++)
-            {
-                recs.Add(c[i].result);
-            }
-            double countWin = recs.Where(x => x.Equals(0)).Count();
-            double countLoss = recs.Where(x => x.Equals(1)).Count();
-            double countTie = recs.Where(x => x.Equals(2)).Count();
-            double percent = countWin / (countLoss + countTie) * 100;
-            return (int)percent;
-        }
-
-        public int getCargoPercentForTeam(int team)
-        {
-            List<int> recs = new List<int>();
-            List<CompiledEventData> c = dataForTeam(team);
-            for (int i = 0; i < c.Count; i++)
-            {
-                recs.Add(Convert.ToByte(c[i].cargo));
+                recs.Add(Convert.ToByte(c[i].shoot));
             }
             double countYes = recs.Where(x => x.Equals(1)).Count();
             double countNo = recs.Where(x => x.Equals(0)).Count();
@@ -448,13 +456,70 @@ namespace Team811Scout
             return (int)percent;
         }
 
-        public int getHatchPercentForTeam(int team)
+        //Which port does the team primarily score in
+        public string getPrimaryPort(int team)
+        {
+            List<CompiledEventData> c = dataForTeam(team);
+            int outer = 0;
+            int inner = 0;
+            int lower = 0;
+
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (c[i].shootOuter)
+                    outer++;
+                if (c[i].shootInner)
+                    inner++;
+                if (c[i].shootLower)
+                    lower++;
+            }
+
+            if (outer == 0 && inner == 0 && lower == 0)
+                return "None";
+            else if (inner > outer && inner > lower)
+                return "Inner";
+            else if (lower > inner && lower > outer)
+                return "Lower";
+            else
+                return "Outer";
+        }
+
+        //From where on the field does the team typically shoot
+        public string getPrimaryShoot(int team)
+        {
+            List<CompiledEventData> c = dataForTeam(team);
+            int trench = 0;
+            int line = 0;
+            int port = 0;
+
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (c[i].shootTrench)
+                    trench++;
+                if (c[i].shootLine)
+                    line++;
+                if (c[i].shootPort)
+                    port++;
+            }
+
+            if (port == 0 && line == 0 && trench == 0)
+                return "None";
+            else if (trench > line && trench > port)
+                return "Trench";
+            else if (port > line && port > trench)
+                return "Port";
+            else
+                return "Initiation Line";
+        }
+
+        //Percent of the time a team climbed
+        public int getClimbPercentForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(Convert.ToByte(c[i].hatch));
+                recs.Add(Convert.ToByte(c[i].climb));
             }
             double countYes = recs.Where(x => x.Equals(1)).Count();
             double countNo = recs.Where(x => x.Equals(0)).Count();
@@ -462,36 +527,71 @@ namespace Team811Scout
             return (int)percent;
         }
 
-        public int getClimb2PercentForTeam(int team)
+        //Did they adjust once climbed
+        public bool getAdjustForTeam(int team)
         {
-            List<int> recs = new List<int>();
+            int count = 0;
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(c[i].climb);
+                if (c[i].adjustClimb)
+                    count++;
             }
-            double count2 = recs.Where(x => x.Equals(2)).Count();
-            double count3 = recs.Where(x => x.Equals(3)).Count();
-            double countNone = recs.Where(x => x.Equals(0)).Count();
-            double twoPercent = (count2) / (count2 + count3 + countNone) * 100;
-            return (int)twoPercent;
+
+            if (count > 0)
+                return true;
+            return false;
         }
 
-        public int getClimb3PercentForTeam(int team)
+        //Can the team spin the wheel
+        public bool getWheelForTeam(int team)
         {
-            List<int> recs = new List<int>();
+            int count = 0;
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(c[i].climb);
+                if (c[i].wheel)
+                    count++;
             }
-            double count2 = recs.Where(x => x.Equals(2)).Count();
-            double count3 = recs.Where(x => x.Equals(3)).Count();
-            double countNone = recs.Where(x => x.Equals(0)).Count();
-            double threePercent = (count3) / (count2 + count3 + countNone) * 100;
-            return (int)threePercent;
+
+            if (count > 0)
+                return true;
+            return false;
         }
 
+        //Can the team do rotation control
+        public bool getWheelRotationForTeam(int team)
+        {
+            int count = 0;
+            List<CompiledEventData> c = dataForTeam(team);
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (c[i].rotationControl)
+                    count++;
+            }
+
+            if (count > 0)
+                return true;
+            return false;
+        }
+
+        //Can the team do position control
+        public bool getWheelPositionForTeam(int team)
+        {
+            int count = 0;
+            List<CompiledEventData> c = dataForTeam(team);
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (c[i].positionControl)
+                    count++;
+            }
+
+            if (count > 0)
+                return true;
+            return false;
+        }
+
+        //Percent of the time the drivers were good
         public int getDriversPercentForTeam(int team)
         {
             List<int> recs = new List<int>();
@@ -506,6 +606,7 @@ namespace Team811Scout
             return (int)percent;
         }
 
+        //Percent of the time the team did nothing
         public int getTablePercentForTeam(int team)
         {
             List<int> recs = new List<int>();
@@ -520,13 +621,16 @@ namespace Team811Scout
             return (int)percent;
         }
 
-        public int getCargoSandstormPercentForTeam(int team)
+        //Autonomous
+
+        //Percent of the time a team moved off the initiation line
+        public int getInitiationLineForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(Convert.ToByte(c[i].sandstormCargo));
+                recs.Add(Convert.ToByte(c[i].initiationCrossed));
             }
             double countYes = recs.Where(x => x.Equals(1)).Count();
             double countNo = recs.Where(x => x.Equals(0)).Count();
@@ -534,76 +638,51 @@ namespace Team811Scout
             return (int)percent;
         }
 
-        public int getHatchSandstormPercentForTeam(int team)
+        //Percent of the time a team scored between 1 and 3 balls during auto
+        public int getLowAutoForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(Convert.ToByte(c[i].sandstormHatch));
+                recs.Add(Convert.ToByte(c[i].auto));
             }
-            double countYes = recs.Where(x => x.Equals(1)).Count();
-            double countNo = recs.Where(x => x.Equals(0)).Count();
-            double percent = (countYes) / (countYes + countNo) * 100;
+            double countNone = recs.Where(x => x.Equals(0)).Count();
+            double countLow = recs.Where(x => x.Equals(1)).Count();
+            double countHigh = recs.Where(x => x.Equals(2)).Count();
+            double percent = (countLow) / (countHigh + countNone + countLow) * 100;
             return (int)percent;
         }
 
-        public int getHabSandstormPercentForTeam(int team)
+        //Percent of the time a team scored 4+ balls during auto
+        public int getHighAutoForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(Convert.ToByte(c[i].sandstormLine));
+                recs.Add(Convert.ToByte(c[i].auto));
             }
-            double countYes = recs.Where(x => x.Equals(1)).Count();
-            double countNo = recs.Where(x => x.Equals(0)).Count();
-            double percent = (countYes) / (countYes + countNo) * 100;
+            double countNone = recs.Where(x => x.Equals(0)).Count();
+            double countLow = recs.Where(x => x.Equals(1)).Count();
+            double countHigh = recs.Where(x => x.Equals(2)).Count();
+            double percent = (countHigh) / (countLow + countNone + countHigh) * 100;
             return (int)percent;
         }
 
-        public int getAutoPercentForTeam(int team)
+        //Percent of the time a team scored 0 balls during auto
+        public int getNoneAutoForTeam(int team)
         {
             List<int> recs = new List<int>();
             List<CompiledEventData> c = dataForTeam(team);
             for (int i = 0; i < c.Count; i++)
             {
-                recs.Add(c[i].sandstormMode);
+                recs.Add(Convert.ToByte(c[i].auto));
             }
-            double auto = recs.Where(x => x.Equals(0)).Count();
-            double teleop = recs.Where(x => x.Equals(1)).Count();
-            double nothing = recs.Where(x => x.Equals(2)).Count();
-            double percent = (auto) / (teleop + auto + nothing) * 100;
-            return (int)percent;
-        }
-
-        public int getTeleopPercentForTeam(int team)
-        {
-            List<int> recs = new List<int>();
-            List<CompiledEventData> c = dataForTeam(team);
-            for (int i = 0; i < c.Count; i++)
-            {
-                recs.Add(c[i].sandstormMode);
-            }
-            double auto = recs.Where(x => x.Equals(0)).Count();
-            double teleop = recs.Where(x => x.Equals(1)).Count();
-            double nothing = recs.Where(x => x.Equals(2)).Count();
-            double percent = (teleop) / (teleop + auto + nothing) * 100;
-            return (int)percent;
-        }
-
-        public int getNothingPercentForTeam(int team)
-        {
-            List<int> recs = new List<int>();
-            List<CompiledEventData> c = dataForTeam(team);
-            for (int i = 0; i < c.Count; i++)
-            {
-                recs.Add(c[i].sandstormMode);
-            }
-            double auto = recs.Where(x => x.Equals(0)).Count();
-            double teleop = recs.Where(x => x.Equals(1)).Count();
-            double nothing = recs.Where(x => x.Equals(2)).Count();
-            double percent = (nothing) / (teleop + auto + nothing) * 100;
+            double countNone = recs.Where(x => x.Equals(0)).Count();
+            double countLow = recs.Where(x => x.Equals(1)).Count();
+            double countHigh = recs.Where(x => x.Equals(2)).Count();
+            double percent = (countNone) / (countHigh + countLow + countNone) * 100;
             return (int)percent;
         }
     }

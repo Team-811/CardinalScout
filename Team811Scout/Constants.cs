@@ -10,26 +10,22 @@ namespace Team811Scout
 
     public static class Constants
     {
-        //ViewData.cs (general display)
+        
         public static readonly int recommendThreshHigh = 75;
         public static readonly int recommendThreshLow = 50;
         public static readonly int winThreshHigh = 75;
         public static readonly int winThreshLow = 25;
-        public static readonly int hatch_cargoThreshHigh = 66;
-        public static readonly int hatch_cargoThreshLow = 33;
-        public static readonly int climb3Thresh = 50;
-        public static readonly int climb2Thresh = 75;
+        public static readonly int shootThreshHigh = 66;
+        public static readonly int shootThreshLow = 33;
+        public static readonly int climbThreshHigh = 66;
+        public static readonly int climbThreshLow = 33;
         public static readonly int driversThreshHigh = 66;
         public static readonly int driversThreshLow = 33;
-        public static readonly int tableTresh = 15;
-
-        //TeamDetails.cs (detailed display)
-        public static readonly int hatch_cargoMin = 50;
-        public static readonly int hatch_cargoDiff = 20;
-        public static readonly int climb2Min = 75;
-        public static readonly int climb3Min = 50;
-        public static readonly int climbDiff = 15;
-        public static readonly int sandstorm_Hatch_CargoThresh = 50;
+        public static readonly int tableThresh = 15;
+        public static readonly int initiationThreshHigh = 60;
+        public static readonly int initiationThreshLow = 30;
+        public static readonly int autoNoneThresh = 25;
+        public static readonly int autoBallThresh = 70;
         public static readonly double well_barelyWeight = 0.50;
 
         //colors

@@ -13,8 +13,7 @@ namespace Team811Scout
     {
         //declare objects for controls
         private GridView gridStats;
-
-        private GridView gridSandstorm;
+        private GridView gridAuto;
         private GridView gridMatches;
         private TextView textTitle;
         private LinearLayout linearMatches;
@@ -30,7 +29,7 @@ namespace Team811Scout
             SetContentView(Resource.Layout.Team_Details);
             //get controls from layout
             gridStats = FindViewById<GridView>(Resource.Id.gridViewStats);
-            gridSandstorm = FindViewById<GridView>(Resource.Id.gridViewSandstorm);
+            gridAuto = FindViewById<GridView>(Resource.Id.gridViewAuto);
             gridMatches = FindViewById<GridView>(Resource.Id.gridViewMatches);
             textTitle = FindViewById<TextView>(Resource.Id.textTeam);
             linearMatches = FindViewById<LinearLayout>(Resource.Id.linearMatches);
@@ -47,66 +46,70 @@ namespace Team811Scout
             int currentTeam = compiled[0].teamNumber;
             //display current team in the title
             textTitle.TextFormatted = TextUtils.ConcatFormatted(FormatString.setNormal("Viewing Stats for Team: '"), FormatString.setBold(currentTeam.ToString()), FormatString.setNormal("'"));
-            //get team-specific details from compiled data
+            //get team-specific details from compiled data                      
+            int shootPerc = currentCompiled.getShootPercentForTeam(currentTeam);
+            string prefPort = currentCompiled.getPrimaryPort(currentTeam);
+            string shootPos = currentCompiled.getPrimaryShoot(currentTeam);
+            int climbPerc = currentCompiled.getClimbPercentForTeam(currentTeam);
+            string climbAdj = currentCompiled.getAdjustForTeam(currentTeam).ToString();
+            bool rotation = currentCompiled.getWheelRotationForTeam(currentTeam);
+            bool position = currentCompiled.getWheelPositionForTeam(currentTeam);
             int recPerc = currentCompiled.getRecPercentForTeam(currentTeam);
-            string record = currentCompiled.getWinRecordForTeam(currentTeam);
-            int cargoPerc = currentCompiled.getCargoPercentForTeam(currentTeam);
-            int hatchPerc = currentCompiled.getHatchPercentForTeam(currentTeam);
-            int climbPerc2 = currentCompiled.getClimb2PercentForTeam(currentTeam);
-            int climbPerc3 = currentCompiled.getClimb3PercentForTeam(currentTeam);
-            int driversPerc = currentCompiled.getDriversPercentForTeam(currentTeam);
-            int tablePerc = currentCompiled.getTablePercentForTeam(currentTeam);
-            int winPerc = currentCompiled.getWinPercentForTeam(currentTeam);
-            int cargoSandstormPerc = currentCompiled.getCargoSandstormPercentForTeam(currentTeam);
-            int hatchSandstormPerc = currentCompiled.getHabSandstormPercentForTeam(currentTeam);
-            int habPerc = currentCompiled.getHabSandstormPercentForTeam(currentTeam);
-            int autoPerc = currentCompiled.getAutoPercentForTeam(currentTeam);
-            int teleopPerc = currentCompiled.getTeleopPercentForTeam(currentTeam);
-            int nothingPerc = currentCompiled.getNothingPercentForTeam(currentTeam);
+
+            int initiationPerc = currentCompiled.getInitiationLineForTeam(currentTeam);
+            int autoHighPerc = currentCompiled.getHighAutoForTeam(currentTeam);
+            int autoLowPerc = currentCompiled.getLowAutoForTeam(currentTeam);
+            int autoNonePerc = currentCompiled.getNoneAutoForTeam(currentTeam);
+
+
             //first two rows
             List<SpannableString> statsDisp = new List<SpannableString>()
             {
-                FormatString.setNormal("Cargo / Hatch"),
-                FormatString.setNormal("Climb Level 2 / Level 3"),
+                FormatString.setNormal("Shoot % / Port / Location"),
+                FormatString.setNormal("Climb % / Adjust Climb"),
+                FormatString.setNormal("Rotation / Position"),
                 FormatString.setNormal("Recommendation %"),
-                FormatString.setBold(cargoPerc.ToString()+"% / "+hatchPerc.ToString()+"%"),
-                FormatString.setBold(climbPerc2.ToString()+"% / "+climbPerc3.ToString()+"%"),
+
+                FormatString.setBold(shootPerc.ToString()+"% / "+ prefPort + " / " + shootPos),
+                FormatString.setBold(climbPerc.ToString()+"% / "+ climbAdj),
+                FormatString.setBold(rotation.ToString() + " / " + position.ToString()),
                 FormatString.setBold(recPerc.ToString()+"%"),
             };
-            //third row (decide)
-            //cargo or hatch bot
-            if (cargoPerc >= Constants.hatch_cargoMin && hatchPerc >= Constants.hatch_cargoMin)
+            //third row (decide if a team is good based off calculations) 
+            //shooting
+            if (shootPerc >= Constants.shootThreshHigh)
             {
-                statsDisp.Add(FormatString.setColorBold("Both", Constants.appGreen));
+                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
             }
-            else if (cargoPerc >= Constants.hatch_cargoMin)
+            else if (shootPerc <= Constants.shootThreshLow)
             {
-                statsDisp.Add(FormatString.setColorBold("Cargo", Constants.appGreen));
-            }
-            else if (hatchPerc >= Constants.hatch_cargoMin)
-            {
-                statsDisp.Add(FormatString.setColorBold("Hatch", Constants.appGreen));
+                statsDisp.Add(FormatString.setColorBold("BAD", Constants.appRed));
             }
             else
             {
-                statsDisp.Add(FormatString.setColorBold("Neither", Constants.appRed));
+                statsDisp.Add(FormatString.setBold("Neutral"));
             }
             //what kind of climber
-            if (climbPerc2 >= Constants.climb2Min && climbPerc3 >= Constants.climb3Min)
+            if (climbPerc >= Constants.climbThreshHigh)
             {
-                statsDisp.Add(FormatString.setColorBold("Level 2/3 Climber", Constants.appGreen));
+                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
             }
-            else if (climbPerc3 >= Constants.climb3Min)
+            else if (climbPerc <= Constants.climbThreshLow)
             {
-                statsDisp.Add(FormatString.setColorBold("Level 3 Climber", Constants.appGreen));
-            }
-            else if (climbPerc2 >= Constants.climb2Min)
-            {
-                statsDisp.Add(FormatString.setColorBold("Level 2 Climber", Constants.appGreen));
+                statsDisp.Add(FormatString.setColorBold("BAD", Constants.appRed));
             }
             else
             {
-                statsDisp.Add(FormatString.setColorBold("No reliable climber", Constants.appRed));
+                statsDisp.Add(FormatString.setBold("Neutral"));
+            }
+            //color wheel
+            if (rotation || position)
+            {
+                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
+            }
+            else
+            {
+                statsDisp.Add(FormatString.setBold("Neutral"));
             }
             //recommendation
             if (recPerc >= Constants.recommendThreshHigh)
@@ -121,73 +124,73 @@ namespace Team811Scout
             {
                 statsDisp.Add(FormatString.setColorBold("Possible Recommend", Constants.appYellow));
             }
+
             //display general stats in first grid box
             ArrayAdapter gridStatsAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, statsDisp);
             gridStats.Adapter = gridStatsAdapt;
-            //figure out which sandstorm mode they use the most often
-            SpannableString primaryMode;
-            if (autoPerc > teleopPerc && autoPerc > nothingPerc)
-            {
-                primaryMode = FormatString.setColorBold("Auto", Constants.appGreen);
-            }
-            else if (teleopPerc > autoPerc && teleopPerc > nothingPerc)
-            {
-                primaryMode = FormatString.setColorBold("Teleop w/Camera", Constants.appGreen);
-            }
+
+            //autonomous display    
+
+            List<SpannableString> autoDisp = new List<SpannableString>();
+
+            autoDisp.Add(FormatString.setBold("Crossed Initiation Line"));
+            if (initiationPerc >= Constants.initiationThreshHigh)
+                autoDisp.Add(FormatString.setColorBold(initiationPerc.ToString() + "% (GOOD)", Constants.appGreen));
+            else if (initiationPerc <= Constants.initiationThreshLow)
+                autoDisp.Add(FormatString.setColorBold(initiationPerc.ToString() + "% (GOOD)", Constants.appRed));
             else
-            {
-                primaryMode = FormatString.setColorBold("Nothing", Constants.appRed);
-            }
-            SpannableString cargo = FormatString.setColorBold("NO (" + cargoSandstormPerc.ToString() + "%) ", Constants.appRed);
-            SpannableString hatch = FormatString.setColorBold("NO (" + hatchSandstormPerc.ToString() + "%) ", Constants.appRed);
-            SpannableString hab = FormatString.setColorBold("NO (" + habPerc.ToString() + "%) ", Constants.appRed);
-            if (cargoSandstormPerc >= Constants.sandstorm_Hatch_CargoThresh)
-            {
-                cargo = FormatString.setColorBold("YES (" + cargoSandstormPerc.ToString() + "%) ", Constants.appGreen);
-            }
-            if (hatchSandstormPerc >= Constants.sandstorm_Hatch_CargoThresh)
-            {
-                hatch = FormatString.setColorBold("YES (" + hatchSandstormPerc.ToString() + "%) ", Constants.appGreen);
-            }
-            if (habPerc >= Constants.sandstorm_Hatch_CargoThresh)
-            {
-                hab = FormatString.setColorBold("YES (" + habPerc.ToString() + "%) ", Constants.appGreen);
-            }
-            List<SpannableString> sandstormDisp = new List<SpannableString>()
-            {
-                FormatString.setBold("Primary Sandstorm Mode: "),
-                primaryMode,
-                FormatString.setBold("Cargo? "),
-                cargo,
-                FormatString.setBold("Hatch? "),
-                hatch,
-                FormatString.setBold("Crossed Hab Line? "),
-                hab,
-            };
+                autoDisp.Add(FormatString.setBold(initiationPerc.ToString() + "%"));
+
+            autoDisp.Add(FormatString.setBold("Scored 0 Balls"));
+            if (autoNonePerc >= Constants.autoNoneThresh)
+                autoDisp.Add(FormatString.setColorBold(autoNonePerc.ToString() + "% (BAD)", Constants.appRed));
+            else
+                autoDisp.Add(FormatString.setBold(autoNonePerc.ToString() + "%"));
+
+            autoDisp.Add(FormatString.setBold("Scored 1-3 Balls"));
+            if (autoLowPerc + autoHighPerc >= Constants.autoBallThresh)
+                autoDisp.Add(FormatString.setColorBold(autoLowPerc.ToString() + "% (GOOD)", Constants.appGreen));
+            else
+                autoDisp.Add(FormatString.setBold(autoLowPerc.ToString() + "%"));
+
+            autoDisp.Add(FormatString.setBold("Scored 4+ Balls"));
+            if (autoHighPerc + autoLowPerc >= Constants.autoBallThresh)
+                autoDisp.Add(FormatString.setColorBold(autoHighPerc.ToString() + "% (GOOD)", Constants.appGreen));
+            else
+                autoDisp.Add(FormatString.setBold(autoHighPerc.ToString() + "%"));
+
+
             //display sandstorm stats in the second grid
-            ArrayAdapter gridSandstormAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, sandstormDisp);
-            gridSandstorm.Adapter = gridSandstormAdapt;
+            ArrayAdapter gridSandstormAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, autoDisp);
+            gridAuto.Adapter = gridSandstormAdapt;
+
             //display a list of matches the team was in and the details from each one
             string[] properties = new string[]
             {
                 "Result of Team's Alliance",
                 "Position",
                 "Table",
-                "Started Off Level",
-                "Sandstorm Mode",
-                "Hatch in Sandstorm",
-                "Cargo in Sandstorm",
-                "Crossed Hab Line",
-                "Can do Cargo",
-                "Does Cargo Well",
-                "Barely Does Cargo",
-                "Can do Hatches",
-                "Does Hatches Well",
-                "Barely Does Hatches",
-                "Climbing Level",
+                "Crossed Initiation Line",
+                "Auto",
+                "Can Shoot",
+                "Outer Port",
+                "Inner Port",
+                "Lower Port",
+                "Shoots Well",
+                "Barely Shoots",
+                "Shoots from Trench",
+                "Shoots from Initiation Line",
+                "Shoots from Against Power Port",
+                "Climb",
+                "Adjusts on Climbing Bar",
+                "Can Spin Color Wheel",
+                "Rotation Control",
+                "Position Control",
+                "Fits Under Trench",
                 "Good Driveteam",
                 "Recommended"
             };
+
             gridMatches.NumColumns = compiled.Count + 1;
             List<SpannableString> display = new List<SpannableString>();
             compiled.Reverse();
@@ -199,6 +202,8 @@ namespace Team811Scout
                     display.Add(FormatString.setBold(compiled[i].matchNumber.ToString()));
                 }
                 int p = 0;
+
+                //Result
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
@@ -216,6 +221,8 @@ namespace Team811Scout
                     }
                 }
                 p++;
+
+                //Position
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
@@ -229,6 +236,8 @@ namespace Team811Scout
                     }
                 }
                 p++;
+
+                //Table
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
@@ -242,166 +251,263 @@ namespace Team811Scout
                     }
                 }
                 p++;
+
+                //Crossed Line
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].sandstormStartLevel == 1)
+                    if (compiled[j].initiationCrossed)
                     {
-                        display.Add(FormatString.setNormal("Level " + compiled[j].sandstormStartLevel.ToString()));
+                        display.Add(FormatString.setColor(compiled[j].initiationCrossed.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor("Level " + compiled[j].sandstormStartLevel.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].initiationCrossed.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Auto
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].sandstormMode == 0 || compiled[j].sandstormMode == 1)
+                    if (compiled[j].auto == 0)
                     {
-                        display.Add(FormatString.setColor(compiled[j].getSandstormMode(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].getAuto(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].getSandstormMode(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].getAuto(), Constants.appGreen));
                     }
                 }
                 p++;
+
+                //Shoot
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].sandstormHatch)
+                    if (compiled[j].shoot)
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormHatch.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shoot.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormHatch.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shoot.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Outer
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].sandstormCargo)
+                    if (compiled[j].shootOuter)
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormCargo.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootOuter.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormCargo.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootOuter.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Inner
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].sandstormLine)
+                    if (compiled[j].shootInner)
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormLine.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootInner.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].sandstormLine.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootInner.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Lower
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].cargo)
+                    if (compiled[j].shootLower)
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargo.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootLower.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargo.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootLower.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Well
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].cargoWell)
+                    if (compiled[j].shootWell)
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargoWell.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootWell.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargoWell.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootWell.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Barely
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].cargoBarely)
+                    if (compiled[j].shootBarely)
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargoBarely.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootBarely.ToString(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].cargoBarely.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootBarely.ToString(), Constants.appGreen));
                     }
                 }
                 p++;
+
+                //From Trench
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].hatch)
+                    if (compiled[j].shootTrench)
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatch.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootTrench.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatch.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootTrench.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //From Line
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].hatchWell)
+                    if (compiled[j].shootLine)
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatchWell.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootLine.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatchWell.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootLine.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //From Port
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].hatchBarely)
+                    if (compiled[j].shootPort)
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatchBarely.ToString(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].shootPort.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].hatchBarely.ToString(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].shootPort.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Climb
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].climb == 3)
+                    if (compiled[j].climb)
                     {
-                        display.Add(FormatString.setColorBold(compiled[j].getClimb(), Constants.appGreen));
-                    }
-                    else if (compiled[j].climb == 2)
-                    {
-                        display.Add(FormatString.setColor(compiled[j].getClimb(), Constants.appGreen));
+                        display.Add(FormatString.setColor(compiled[j].climb.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].getClimb(), Constants.appRed));
+                        display.Add(FormatString.setColor(compiled[j].climb.ToString(), Constants.appRed));
                     }
                 }
                 p++;
+
+                //Adjust
+                display.Add(FormatString.setBold(properties[p]));
+                for (int j = 0; j < compiled.Count; j++)
+                {
+                    if (compiled[j].adjustClimb)
+                    {
+                        display.Add(FormatString.setColor(compiled[j].adjustClimb.ToString(), Constants.appGreen));
+                    }
+                    else
+                    {
+                        display.Add(FormatString.setColor(compiled[j].adjustClimb.ToString(), Constants.appRed));
+                    }
+                }
+                p++;
+
+                //Wheel
+                display.Add(FormatString.setBold(properties[p]));
+                for (int j = 0; j < compiled.Count; j++)
+                {
+                    if (compiled[j].wheel)
+                    {
+                        display.Add(FormatString.setColor(compiled[j].wheel.ToString(), Constants.appGreen));
+                    }
+                    else
+                    {
+                        display.Add(FormatString.setColor(compiled[j].wheel.ToString(), Constants.appRed));
+                    }
+                }
+                p++;
+
+                //Rotation
+                display.Add(FormatString.setBold(properties[p]));
+                for (int j = 0; j < compiled.Count; j++)
+                {
+                    if (compiled[j].rotationControl)
+                    {
+                        display.Add(FormatString.setColor(compiled[j].rotationControl.ToString(), Constants.appGreen));
+                    }
+                    else
+                    {
+                        display.Add(FormatString.setColor(compiled[j].rotationControl.ToString(), Constants.appRed));
+                    }
+                }
+                p++;
+
+                //Position
+                display.Add(FormatString.setBold(properties[p]));
+                for (int j = 0; j < compiled.Count; j++)
+                {
+                    if (compiled[j].positionControl)
+                    {
+                        display.Add(FormatString.setColor(compiled[j].positionControl.ToString(), Constants.appGreen));
+                    }
+                    else
+                    {
+                        display.Add(FormatString.setColor(compiled[j].positionControl.ToString(), Constants.appRed));
+                    }
+                }
+                p++;
+
+                //Under Trench
+                display.Add(FormatString.setBold(properties[p]));
+                for (int j = 0; j < compiled.Count; j++)
+                {
+                    if (compiled[j].underTrench)
+                    {
+                        display.Add(FormatString.setColor(compiled[j].underTrench.ToString(), Constants.appGreen));
+                    }
+                    else
+                    {
+                        display.Add(FormatString.setColor(compiled[j].underTrench.ToString(), Constants.appRed));
+                    }
+                }
+                p++;
+
+                //Good drivers
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
@@ -415,6 +521,8 @@ namespace Team811Scout
                     }
                 }
                 p++;
+
+                //Recommended
                 display.Add(FormatString.setBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
@@ -436,8 +544,9 @@ namespace Team811Scout
             ArrayAdapter gridMatchesAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, display);
             gridMatches.Adapter = gridMatchesAdapt;
             float scale = this.Resources.DisplayMetrics.Density;
-            FrameLayout.LayoutParams _params = new FrameLayout.LayoutParams((int)(compiled.Count * 300 * scale), LinearLayout.LayoutParams.WrapContent);
+            FrameLayout.LayoutParams _params = new FrameLayout.LayoutParams((int)(compiled.Count * 500 * scale), Android.Views.ViewGroup.LayoutParams.WrapContent);
             linearMatches.LayoutParameters = _params;
         }
     }
 }
+    

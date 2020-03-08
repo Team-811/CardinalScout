@@ -2,7 +2,7 @@
 
 namespace Team811Scout
 {
-    /*This class stores the index of a current teams in a CompiledEventData multidimensional list*/
+    /*This class stores the index of a current team in a CompiledEventData multidimensional list*/
 
     public class CompiledTeamIndex
     {

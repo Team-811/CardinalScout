@@ -55,11 +55,12 @@ namespace Team811Scout
             //column titles
             properties = new string[]
             {
-                "Team",
+                "Team",               
                 "Recommend %",
                 "Record",
-                "Cargo/Hatch %",
-                "        Climb?\n(Lvl 2%/Lvl 3%)",
+                "Shoot% / Port",
+                "Climb% / Adjust",
+                "Color Wheel",
                 "Good Drivers (%)",
                 "'Table' %"
             };
@@ -67,10 +68,11 @@ namespace Team811Scout
             List<int> teamNumbers = currentCompiled.getTeamNumbersArray();
             List<int> recPerc = currentCompiled.getRecPercentArray();
             List<string> record = currentCompiled.getWinRecordArray();
-            List<int> cargoPerc = currentCompiled.getCargoPercentArray();
-            List<int> hatchPerc = currentCompiled.getHatchPercentArray();
-            List<int> climbPerc2 = currentCompiled.getClimb2PercentArray();
-            List<int> climbPerc3 = currentCompiled.getClimb3PercentArray();
+            List<int> shootPerc = currentCompiled.getShootPercentArray();
+            List<string> prefPort = currentCompiled.getPrimaryPortArray();
+            List<int> climbPerc = currentCompiled.getClimbPercentArray();
+            List<bool> climbAdj = currentCompiled.getClimbAdjustArray();
+            List<bool> cWheel = currentCompiled.getWheelArray();
             List<int> driversPerc = currentCompiled.getDriversPercentArray();
             List<int> tablePerc = currentCompiled.getTablePercentArray();
             List<int> winPerc = currentCompiled.getWinPercentArray();
@@ -110,39 +112,42 @@ namespace Team811Scout
                 {
                     display.Add(FormatString.setNormal(record[i]));
                 }
-                //cargo/hatch percents
-                if (cargoPerc[i] >= Constants.hatch_cargoThreshHigh)
+                //Shooter data
+                if (shootPerc[i] >= Constants.shootThreshHigh)
                 {
-                    display.Add(FormatString.setColorBold(cargoPerc[i].ToString() + "% / " + hatchPerc[i].ToString() + "%", Constants.appGreen));
+                    display.Add(FormatString.setColorBold(shootPerc[i].ToString() + "% / " + prefPort[i], Constants.appGreen));
                 }
-                else if (cargoPerc[i] <= Constants.hatch_cargoThreshLow)
+                else if (shootPerc[i] <= Constants.shootThreshLow)
                 {
-                    display.Add(FormatString.setColorBold(cargoPerc[i].ToString() + "% / " + hatchPerc[i].ToString() + "%", Constants.appRed));
-                }
-                else
-                {
-                    display.Add(FormatString.setNormal(cargoPerc[i].ToString() + "% / " + hatchPerc[i].ToString() + "%"));
-                }
-                //climbing percents
-                List<SpannableString> climbDisplay = new List<SpannableString>();
-                if (climbPerc2[i] >= Constants.climb2Thresh)
-                {
-                    climbDisplay.Add(FormatString.setColorBold(climbPerc2[i].ToString() + "% / ", Constants.appGreen));
+                    display.Add(FormatString.setColorBold(shootPerc[i].ToString() + "% / " + prefPort[i], Constants.appRed));
                 }
                 else
                 {
-                    climbDisplay.Add(FormatString.setNormal(climbPerc2[i].ToString() + "% / "));
+                    display.Add(FormatString.setNormal(shootPerc[i].ToString() + "% / " + prefPort[i]));
                 }
-                if (climbPerc3[i] >= Constants.climb3Thresh)
+                //Climbing Data
+                if (climbPerc[i] >= Constants.climbThreshHigh)
                 {
-                    climbDisplay.Add(FormatString.setColorBold(climbPerc3[i].ToString() + "%", Constants.appGreen));
+                    display.Add(FormatString.setColorBold(climbPerc[i].ToString() + "% / " + climbAdj[i].ToString(), Constants.appGreen));
+                }
+                else if (shootPerc[i] <= Constants.climbThreshLow)
+                {
+                    display.Add(FormatString.setColorBold(climbPerc[i].ToString() + "% / " + climbAdj[i].ToString(), Constants.appRed));
                 }
                 else
                 {
-                    climbDisplay.Add(FormatString.setNormal(climbPerc3[i].ToString() + "%"));
+                    display.Add(FormatString.setNormal(climbPerc[i].ToString() + "% / " + climbAdj[i].ToString()));
                 }
-                display.Add(new SpannableString(TextUtils.ConcatFormatted(climbDisplay.ToArray())));
-                //driveteam percents
+                //Wheel Data
+                if (cWheel[i])
+                {
+                    display.Add(FormatString.setColorBold(cWheel[i].ToString(), Constants.appGreen));
+                }
+                else
+                {
+                    display.Add(FormatString.setColorBold(cWheel[i].ToString(), Constants.appRed));
+                }               
+                //Driveteam Data
                 if (driversPerc[i] >= Constants.driversThreshHigh)
                 {
                     display.Add(FormatString.setColorBold(driversPerc[i].ToString() + "%", Constants.appGreen));
@@ -155,8 +160,8 @@ namespace Team811Scout
                 {
                     display.Add(FormatString.setNormal(driversPerc[i].ToString() + "%"));
                 }
-                //table percent
-                if (tablePerc[i] >= Constants.tableTresh)
+                //Table Data
+                if (tablePerc[i] >= Constants.tableThresh)
                 {
                     display.Add(FormatString.setColorBold(tablePerc[i].ToString() + "%", Constants.appRed));
                 }
@@ -191,9 +196,9 @@ namespace Team811Scout
         private void gridClicked(object sender, ItemClickEventArgs e)
         {
             //make sure a team number on the left was selected
-            if (e.Position % 7 == 0 && e.Position != 0)
+            if (e.Position % 8 == 0 && e.Position != 0)
             {
-                CompiledTeamIndex currentIndex = new CompiledTeamIndex((e.Position / 7) - 1);
+                CompiledTeamIndex currentIndex = new CompiledTeamIndex((e.Position / 8) - 1);
                 //set where the team is in the compiled event data multidimensional lsit
                 eData.setTeamIndex(currentIndex);
                 StartActivity(typeof(DetailedTeamData));

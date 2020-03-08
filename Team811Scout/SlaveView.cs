@@ -65,18 +65,23 @@ namespace Team811Scout
                               scoutList[i].result.ToString() +
                               scoutList[i].position.ToString() +
                               Convert.ToByte(scoutList[i].isTable).ToString() +
-                              scoutList[i].sandstormStartLevel.ToString() +
-                              scoutList[i].sandstormMode.ToString() +
-                              Convert.ToByte(scoutList[i].sandstormHatch).ToString() +
-                              Convert.ToByte(scoutList[i].sandstormCargo).ToString() +
-                              Convert.ToByte(scoutList[i].sandstormLine).ToString() +
-                              Convert.ToByte(scoutList[i].cargo).ToString() +
-                              Convert.ToByte(scoutList[i].cargoWell).ToString() +
-                              Convert.ToByte(scoutList[i].cargoBarely).ToString() +
-                              Convert.ToByte(scoutList[i].hatch).ToString() +
-                              Convert.ToByte(scoutList[i].hatchWell).ToString() +
-                              Convert.ToByte(scoutList[i].hatchBarely).ToString() +
-                              scoutList[i].climb.ToString() +
+                              Convert.ToByte(scoutList[i].initiationCrossed).ToString() +
+                              scoutList[i].auto.ToString() +
+                              Convert.ToByte(scoutList[i].shoot).ToString() +
+                              Convert.ToByte(scoutList[i].shootOuter).ToString() +
+                              Convert.ToByte(scoutList[i].shootInner).ToString() +
+                              Convert.ToByte(scoutList[i].shootLower).ToString() +
+                              Convert.ToByte(scoutList[i].shootWell).ToString() +
+                              Convert.ToByte(scoutList[i].shootBarely).ToString() +
+                              Convert.ToByte(scoutList[i].shootTrench).ToString() +
+                              Convert.ToByte(scoutList[i].shootLine).ToString() +
+                              Convert.ToByte(scoutList[i].shootPort).ToString() +
+                              Convert.ToByte(scoutList[i].climb).ToString() +
+                              Convert.ToByte(scoutList[i].adjustClimb).ToString() +
+                              Convert.ToByte(scoutList[i].wheel).ToString() +
+                              Convert.ToByte(scoutList[i].rotationControl).ToString() +
+                              Convert.ToByte(scoutList[i].positionControl).ToString() +
+                              Convert.ToByte(scoutList[i].underTrench).ToString() +
                               Convert.ToByte(scoutList[i].goodDrivers).ToString() +
                               scoutList[i].wouldRecommend.ToString();
                         }
@@ -87,18 +92,23 @@ namespace Team811Scout
                               scoutList[i].result.ToString() +
                               scoutList[i].position.ToString() +
                               Convert.ToByte(scoutList[i].isTable).ToString() +
-                              scoutList[i].sandstormStartLevel.ToString() +
-                              scoutList[i].sandstormMode.ToString() +
-                              Convert.ToByte(scoutList[i].sandstormHatch).ToString() +
-                              Convert.ToByte(scoutList[i].sandstormCargo).ToString() +
-                              Convert.ToByte(scoutList[i].sandstormLine).ToString() +
-                              Convert.ToByte(scoutList[i].cargo).ToString() +
-                              Convert.ToByte(scoutList[i].cargoWell).ToString() +
-                              Convert.ToByte(scoutList[i].cargoBarely).ToString() +
-                              Convert.ToByte(scoutList[i].hatch).ToString() +
-                              Convert.ToByte(scoutList[i].hatchWell).ToString() +
-                              Convert.ToByte(scoutList[i].hatchBarely).ToString() +
-                              scoutList[i].climb.ToString() +
+                              Convert.ToByte(scoutList[i].initiationCrossed).ToString() +
+                              scoutList[i].auto.ToString() +
+                              Convert.ToByte(scoutList[i].shoot).ToString() +
+                              Convert.ToByte(scoutList[i].shootOuter).ToString() +
+                              Convert.ToByte(scoutList[i].shootInner).ToString() +
+                              Convert.ToByte(scoutList[i].shootLower).ToString() +
+                              Convert.ToByte(scoutList[i].shootWell).ToString() +
+                              Convert.ToByte(scoutList[i].shootBarely).ToString() +
+                              Convert.ToByte(scoutList[i].shootTrench).ToString() +
+                              Convert.ToByte(scoutList[i].shootLine).ToString() +
+                              Convert.ToByte(scoutList[i].shootPort).ToString() +
+                              Convert.ToByte(scoutList[i].climb).ToString() +
+                              Convert.ToByte(scoutList[i].adjustClimb).ToString() +
+                              Convert.ToByte(scoutList[i].wheel).ToString() +
+                              Convert.ToByte(scoutList[i].rotationControl).ToString() +
+                              Convert.ToByte(scoutList[i].positionControl).ToString() +
+                              Convert.ToByte(scoutList[i].underTrench).ToString() +
                               Convert.ToByte(scoutList[i].goodDrivers).ToString() +
                               scoutList[i].wouldRecommend.ToString();
                         }

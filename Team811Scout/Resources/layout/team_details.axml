@@ -65,7 +65,7 @@ android:layout_height="match_parent">
         android:layout_weight=".3"
         android:id="@+id/linearLayout1">
           <TextView
-          android:text="Teleop Stats:"
+          android:text="General Stats:"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/text"
@@ -79,38 +79,34 @@ android:layout_height="match_parent">
           <HorizontalScrollView
           android:layout_width="match_parent"
           android:layout_height="fill_parent"
-          android:layout_below="@+id/seatLegendLayout">
-            <FrameLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent">
+          android:layout_below="@+id/seatLegendLayout">            
               <LinearLayout
               android:id="@+id/linearLayout_gridtableLayout"
-              android:layout_width="700dp"
+              android:layout_width="wrap_content"
               android:layout_height="wrap_content"
               android:orientation="horizontal">
                 <GridView
                 android:id="@+id/gridViewStats"
-                android:layout_width="wrap_content"
+                android:layout_width="1100dp"
                 android:layout_height="fill_parent"
                 android:layout_margin="4dp"
                 android:gravity="center|center_vertical"
-                android:numColumns="3"
-                android:horizontalSpacing="5dp"
+                android:numColumns="4"
+                android:horizontalSpacing="3dp"
                 android:scrollbars="horizontal"
                 android:verticalSpacing="1dp">
                 </GridView>
-              </LinearLayout>
-            </FrameLayout>
+              </LinearLayout>           
           </HorizontalScrollView>
         </LinearLayout>
         <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".3"
+        android:layout_weight=".35"
         android:id="@+id/linearLayout1">
           <TextView
-          android:text="Sandstorm Stats:"
+          android:text="Autonomous Stats:"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:id="@+id/text"
@@ -134,7 +130,7 @@ android:layout_height="match_parent">
               android:layout_height="wrap_content"
               android:orientation="horizontal">
                 <GridView
-                android:id="@+id/gridViewSandstorm"
+                android:id="@+id/gridViewAuto"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
                 android:layout_margin="4dp"
@@ -152,7 +148,7 @@ android:layout_height="match_parent">
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".4"
+        android:layout_weight=".35"
         android:id="@+id/linearLayout1">
           <TextView
           android:text="Matches:"
@@ -187,7 +183,7 @@ android:layout_height="match_parent">
                 android:gravity="center|center_vertical"
                 android:horizontalSpacing="5dp"
                 android:scrollbars="horizontal"
-                android:verticalSpacing="1dp">
+                android:verticalSpacing="10dp">
                 </GridView>
               </LinearLayout>
             </FrameLayout>
