@@ -7,6 +7,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardinalScout2020", "Cardin
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardinalScout2019", "CardinalScout2019\CardinalScout2019.csproj", "{66CE428B-5E3E-4603-B76F-FBC279EEA34F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Release", "Release", "{9C9BF715-5FD3-492C-8673-61DD631F571C}"
+	ProjectSection(SolutionItems) = preProject
+		Release\2019\com.cardinalScout2019-arm64-v8a.apk = Release\2019\com.cardinalScout2019-arm64-v8a.apk
+		Release\2019\com.cardinalScout2019-armeabi-v7a.apk = Release\2019\com.cardinalScout2019-armeabi-v7a.apk
+		Release\2019\com.cardinalScout2019.apk = Release\2019\com.cardinalScout2019.apk
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
