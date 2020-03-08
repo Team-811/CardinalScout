@@ -2,5 +2,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.cardinalScout2020" android:installLocation="preferExternal">
 	<uses-permission android:name="android.permission.CAMERA" />
 	<uses-sdk android:minSdkVersion="16" android:targetSdkVersion="27" />
-	<application android:allowBackup="true" android:label="CardinalScot20" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher"></application>
+	<application android:allowBackup="true" android:label="CardinalScout20" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/AppTheme" android:icon="@mipmap/ic_launcher"></application>
 </manifest>
