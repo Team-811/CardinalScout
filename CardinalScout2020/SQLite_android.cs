@@ -17,7 +17,7 @@ namespace CardinalScout2020
         /// <returns>A new connection to the database.</returns>
         public SQLiteConnection GetConnection()
         {
-            var sqliteFilename = "scoutdb.db3";
+            var sqliteFilename = "scoutdb20.db3";
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var path = Path.Combine(documentsPath, sqliteFilename);
             var conn = new SQLiteConnection(path);
@@ -31,7 +31,7 @@ namespace CardinalScout2020
         /// <returns>Path to the database on the device</returns>
         public static string GetDatabasePath()
         {
-            var sqliteFilename = "scoutdb.db3";
+            var sqliteFilename = "scoutdb20.db3";
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
             var path = Path.Combine(documentsPath, sqliteFilename);
             return path;
