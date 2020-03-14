@@ -5113,22 +5113,6 @@ namespace CardinalScout2020
 			}
 		}
 		
-		public partial class Array
-		{
-			
-			// aapt resource value: 0x7f0f0000
-			public const int positions = 2131689472;
-			
-			static Array()
-			{
-				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
-			}
-			
-			private Array()
-			{
-			}
-		}
-		
 		public partial class Attribute
 		{
 			
@@ -7419,26 +7403,26 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f020053
 			public const int avd_hide_password = 2130837587;
 			
-			// aapt resource value: 0x7f020145
-			public const int avd_hide_password_1 = 2130837829;
-			
 			// aapt resource value: 0x7f020146
-			public const int avd_hide_password_2 = 2130837830;
+			public const int avd_hide_password_1 = 2130837830;
 			
 			// aapt resource value: 0x7f020147
-			public const int avd_hide_password_3 = 2130837831;
+			public const int avd_hide_password_2 = 2130837831;
+			
+			// aapt resource value: 0x7f020148
+			public const int avd_hide_password_3 = 2130837832;
 			
 			// aapt resource value: 0x7f020054
 			public const int avd_show_password = 2130837588;
 			
-			// aapt resource value: 0x7f020148
-			public const int avd_show_password_1 = 2130837832;
-			
 			// aapt resource value: 0x7f020149
-			public const int avd_show_password_2 = 2130837833;
+			public const int avd_show_password_1 = 2130837833;
 			
 			// aapt resource value: 0x7f02014a
-			public const int avd_show_password_3 = 2130837834;
+			public const int avd_show_password_2 = 2130837834;
+			
+			// aapt resource value: 0x7f02014b
+			public const int avd_show_password_3 = 2130837835;
 			
 			// aapt resource value: 0x7f020055
 			public const int common_full_open_on_phone = 2130837589;
@@ -8056,109 +8040,112 @@ namespace CardinalScout2020
 			public const int icon = 2130837793;
 			
 			// aapt resource value: 0x7f020122
-			public const int mr_button_connected_dark = 2130837794;
+			public const int icon20 = 2130837794;
 			
 			// aapt resource value: 0x7f020123
-			public const int mr_button_connected_light = 2130837795;
+			public const int mr_button_connected_dark = 2130837795;
 			
 			// aapt resource value: 0x7f020124
-			public const int mr_button_connecting_dark = 2130837796;
+			public const int mr_button_connected_light = 2130837796;
 			
 			// aapt resource value: 0x7f020125
-			public const int mr_button_connecting_light = 2130837797;
+			public const int mr_button_connecting_dark = 2130837797;
 			
 			// aapt resource value: 0x7f020126
-			public const int mr_button_dark = 2130837798;
+			public const int mr_button_connecting_light = 2130837798;
 			
 			// aapt resource value: 0x7f020127
-			public const int mr_button_light = 2130837799;
+			public const int mr_button_dark = 2130837799;
 			
 			// aapt resource value: 0x7f020128
-			public const int mr_dialog_close_dark = 2130837800;
+			public const int mr_button_light = 2130837800;
 			
 			// aapt resource value: 0x7f020129
-			public const int mr_dialog_close_light = 2130837801;
+			public const int mr_dialog_close_dark = 2130837801;
 			
 			// aapt resource value: 0x7f02012a
-			public const int mr_dialog_material_background_dark = 2130837802;
+			public const int mr_dialog_close_light = 2130837802;
 			
 			// aapt resource value: 0x7f02012b
-			public const int mr_dialog_material_background_light = 2130837803;
+			public const int mr_dialog_material_background_dark = 2130837803;
 			
 			// aapt resource value: 0x7f02012c
-			public const int mr_group_collapse = 2130837804;
+			public const int mr_dialog_material_background_light = 2130837804;
 			
 			// aapt resource value: 0x7f02012d
-			public const int mr_group_expand = 2130837805;
+			public const int mr_group_collapse = 2130837805;
 			
 			// aapt resource value: 0x7f02012e
-			public const int mr_media_pause_dark = 2130837806;
+			public const int mr_group_expand = 2130837806;
 			
 			// aapt resource value: 0x7f02012f
-			public const int mr_media_pause_light = 2130837807;
+			public const int mr_media_pause_dark = 2130837807;
 			
 			// aapt resource value: 0x7f020130
-			public const int mr_media_play_dark = 2130837808;
+			public const int mr_media_pause_light = 2130837808;
 			
 			// aapt resource value: 0x7f020131
-			public const int mr_media_play_light = 2130837809;
+			public const int mr_media_play_dark = 2130837809;
 			
 			// aapt resource value: 0x7f020132
-			public const int mr_media_stop_dark = 2130837810;
+			public const int mr_media_play_light = 2130837810;
 			
 			// aapt resource value: 0x7f020133
-			public const int mr_media_stop_light = 2130837811;
+			public const int mr_media_stop_dark = 2130837811;
 			
 			// aapt resource value: 0x7f020134
-			public const int mr_vol_type_audiotrack_dark = 2130837812;
+			public const int mr_media_stop_light = 2130837812;
 			
 			// aapt resource value: 0x7f020135
-			public const int mr_vol_type_audiotrack_light = 2130837813;
+			public const int mr_vol_type_audiotrack_dark = 2130837813;
 			
 			// aapt resource value: 0x7f020136
-			public const int navigation_empty_icon = 2130837814;
+			public const int mr_vol_type_audiotrack_light = 2130837814;
 			
 			// aapt resource value: 0x7f020137
-			public const int notification_action_background = 2130837815;
+			public const int navigation_empty_icon = 2130837815;
 			
 			// aapt resource value: 0x7f020138
-			public const int notification_bg = 2130837816;
+			public const int notification_action_background = 2130837816;
 			
 			// aapt resource value: 0x7f020139
-			public const int notification_bg_low = 2130837817;
+			public const int notification_bg = 2130837817;
 			
 			// aapt resource value: 0x7f02013a
-			public const int notification_bg_low_normal = 2130837818;
+			public const int notification_bg_low = 2130837818;
 			
 			// aapt resource value: 0x7f02013b
-			public const int notification_bg_low_pressed = 2130837819;
+			public const int notification_bg_low_normal = 2130837819;
 			
 			// aapt resource value: 0x7f02013c
-			public const int notification_bg_normal = 2130837820;
+			public const int notification_bg_low_pressed = 2130837820;
 			
 			// aapt resource value: 0x7f02013d
-			public const int notification_bg_normal_pressed = 2130837821;
+			public const int notification_bg_normal = 2130837821;
 			
 			// aapt resource value: 0x7f02013e
-			public const int notification_icon_background = 2130837822;
-			
-			// aapt resource value: 0x7f020143
-			public const int notification_template_icon_bg = 2130837827;
-			
-			// aapt resource value: 0x7f020144
-			public const int notification_template_icon_low_bg = 2130837828;
+			public const int notification_bg_normal_pressed = 2130837822;
 			
 			// aapt resource value: 0x7f02013f
-			public const int notification_tile_bg = 2130837823;
+			public const int notification_icon_background = 2130837823;
+			
+			// aapt resource value: 0x7f020144
+			public const int notification_template_icon_bg = 2130837828;
+			
+			// aapt resource value: 0x7f020145
+			public const int notification_template_icon_low_bg = 2130837829;
 			
 			// aapt resource value: 0x7f020140
-			public const int notify_panel_notification_icon_bg = 2130837824;
+			public const int notification_tile_bg = 2130837824;
 			
 			// aapt resource value: 0x7f020141
-			public const int tooltip_frame_dark = 2130837825;
+			public const int notify_panel_notification_icon_bg = 2130837825;
 			
 			// aapt resource value: 0x7f020142
-			public const int tooltip_frame_light = 2130837826;
+			public const int tooltip_frame_dark = 2130837826;
+			
+			// aapt resource value: 0x7f020143
+			public const int tooltip_frame_light = 2130837827;
 			
 			static Drawable()
 			{
@@ -8305,8 +8292,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c00d0
 			public const int b5p2 = 2131493072;
 			
-			// aapt resource value: 0x7f0c012f
-			public const int bAddTeam = 2131493167;
+			// aapt resource value: 0x7f0c012d
+			public const int bAddTeam = 2131493165;
 			
 			// aapt resource value: 0x7f0c00d1
 			public const int bCompile2 = 2131493073;
@@ -8341,11 +8328,11 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c00d3
 			public const int bEditMatch = 2131493075;
 			
-			// aapt resource value: 0x7f0c012c
-			public const int bFinish = 2131493164;
+			// aapt resource value: 0x7f0c012a
+			public const int bFinish = 2131493162;
 			
-			// aapt resource value: 0x7f0c013b
-			public const int bGenerateQR = 2131493179;
+			// aapt resource value: 0x7f0c0139
+			public const int bGenerateQR = 2131493177;
 			
 			// aapt resource value: 0x7f0c0093
 			public const int bNewEvent = 2131493011;
@@ -8353,14 +8340,14 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c00b1
 			public const int bRefreshEvents = 2131493041;
 			
-			// aapt resource value: 0x7f0c012d
-			public const int bRefreshMatches = 2131493165;
-			
-			// aapt resource value: 0x7f0c0133
-			public const int bSelect = 2131493171;
+			// aapt resource value: 0x7f0c012b
+			public const int bRefreshMatches = 2131493163;
 			
 			// aapt resource value: 0x7f0c0131
-			public const int bSelectView = 2131493169;
+			public const int bSelect = 2131493169;
+			
+			// aapt resource value: 0x7f0c012f
+			public const int bSelectView = 2131493167;
 			
 			// aapt resource value: 0x7f0c00c2
 			public const int bSetMaster = 2131493058;
@@ -8374,8 +8361,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0095
 			public const int bSync = 2131493013;
 			
-			// aapt resource value: 0x7f0c012e
-			public const int bViewData = 2131493166;
+			// aapt resource value: 0x7f0c012c
+			public const int bViewData = 2131493164;
 			
 			// aapt resource value: 0x7f0c0094
 			public const int bViewPrev = 2131493012;
@@ -8413,17 +8400,17 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c007a
 			public const int checkbox = 2131492986;
 			
-			// aapt resource value: 0x7f0c0132
-			public const int chooseList = 2131493170;
-			
 			// aapt resource value: 0x7f0c0130
-			public const int choosetoView = 2131493168;
+			public const int chooseList = 2131493168;
+			
+			// aapt resource value: 0x7f0c012e
+			public const int choosetoView = 2131493166;
 			
 			// aapt resource value: 0x7f0c00fb
 			public const int chronometer = 2131493115;
 			
-			// aapt resource value: 0x7f0c011a
-			public const int climb = 2131493146;
+			// aapt resource value: 0x7f0c0118
+			public const int climb = 2131493144;
 			
 			// aapt resource value: 0x7f0c0055
 			public const int clip_horizontal = 2131492949;
@@ -8434,14 +8421,14 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0041
 			public const int collapseActionView = 2131492929;
 			
-			// aapt resource value: 0x7f0c012b
-			public const int comments = 2131493163;
+			// aapt resource value: 0x7f0c0129
+			public const int comments = 2131493161;
 			
 			// aapt resource value: 0x7f0c00a5
 			public const int container = 2131493029;
 			
-			// aapt resource value: 0x7f0c0143
-			public const int contentFrame = 2131493187;
+			// aapt resource value: 0x7f0c0141
+			public const int contentFrame = 2131493185;
 			
 			// aapt resource value: 0x7f0c006d
 			public const int contentPanel = 2131492973;
@@ -8482,11 +8469,11 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0029
 			public const int disableHome = 2131492905;
 			
-			// aapt resource value: 0x7f0c0122
-			public const int driversNo = 2131493154;
+			// aapt resource value: 0x7f0c0120
+			public const int driversNo = 2131493152;
 			
-			// aapt resource value: 0x7f0c0121
-			public const int driversYes = 2131493153;
+			// aapt resource value: 0x7f0c011f
+			public const int driversYes = 2131493151;
 			
 			// aapt resource value: 0x7f0c0085
 			public const int edit_query = 2131492997;
@@ -8548,14 +8535,14 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c00d2
 			public const int gridRecent = 2131493074;
 			
+			// aapt resource value: 0x7f0c013d
+			public const int gridViewAuto = 2131493181;
+			
 			// aapt resource value: 0x7f0c013f
-			public const int gridViewAuto = 2131493183;
+			public const int gridViewMatches = 2131493183;
 			
-			// aapt resource value: 0x7f0c0141
-			public const int gridViewMatches = 2131493185;
-			
-			// aapt resource value: 0x7f0c013e
-			public const int gridViewStats = 2131493182;
+			// aapt resource value: 0x7f0c013c
+			public const int gridViewStats = 2131493180;
 			
 			// aapt resource value: 0x7f0c00bd
 			public const int gridViewTeam = 2131493053;
@@ -8581,11 +8568,11 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0066
 			public const int image = 2131492966;
 			
-			// aapt resource value: 0x7f0c0139
-			public const int imgQR1 = 2131493177;
+			// aapt resource value: 0x7f0c0137
+			public const int imgQR1 = 2131493175;
 			
-			// aapt resource value: 0x7f0c013a
-			public const int imgQR2 = 2131493178;
+			// aapt resource value: 0x7f0c0138
+			public const int imgQR2 = 2131493176;
 			
 			// aapt resource value: 0x7f0c00fc
 			public const int info = 2131493116;
@@ -8620,11 +8607,11 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0092
 			public const int linearLayout1 = 2131493010;
 			
-			// aapt resource value: 0x7f0c013d
-			public const int linearLayout_gridtableLayout = 2131493181;
+			// aapt resource value: 0x7f0c013b
+			public const int linearLayout_gridtableLayout = 2131493179;
 			
-			// aapt resource value: 0x7f0c0140
-			public const int linearMatches = 2131493184;
+			// aapt resource value: 0x7f0c013e
+			public const int linearMatches = 2131493182;
 			
 			// aapt resource value: 0x7f0c0026
 			public const int listMode = 2131492902;
@@ -8647,14 +8634,14 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0103
 			public const int main_toolbar = 2131493123;
 			
-			// aapt resource value: 0x7f0c0145
-			public const int masked = 2131493189;
+			// aapt resource value: 0x7f0c0143
+			public const int masked = 2131493187;
 			
 			// aapt resource value: 0x7f0c00f5
 			public const int media_actions = 2131493109;
 			
-			// aapt resource value: 0x7f0c0142
-			public const int message = 2131493186;
+			// aapt resource value: 0x7f0c0140
+			public const int message = 2131493184;
 			
 			// aapt resource value: 0x7f0c0039
 			public const int middle = 2131492921;
@@ -8776,8 +8763,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0054
 			public const int pin = 2131492948;
 			
-			// aapt resource value: 0x7f0c011e
-			public const int positionC = 2131493150;
+			// aapt resource value: 0x7f0c011c
+			public const int positionC = 2131493148;
 			
 			// aapt resource value: 0x7f0c0006
 			public const int progress_circular = 2131492870;
@@ -8797,44 +8784,44 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c010d
 			public const int radioAuto = 2131493133;
 			
-			// aapt resource value: 0x7f0c0120
-			public const int radioDrivers = 2131493152;
+			// aapt resource value: 0x7f0c011e
+			public const int radioDrivers = 2131493150;
 			
 			// aapt resource value: 0x7f0c010e
 			public const int radioNone = 2131493134;
 			
-			// aapt resource value: 0x7f0c0123
-			public const int radioRecommend = 2131493155;
-			
-			// aapt resource value: 0x7f0c0127
-			public const int radioResult = 2131493159;
-			
-			// aapt resource value: 0x7f0c011b
-			public const int readjust = 2131493147;
-			
-			// aapt resource value: 0x7f0c0126
-			public const int recMaybe = 2131493158;
+			// aapt resource value: 0x7f0c0121
+			public const int radioRecommend = 2131493153;
 			
 			// aapt resource value: 0x7f0c0125
-			public const int recNo = 2131493157;
+			public const int radioResult = 2131493157;
+			
+			// aapt resource value: 0x7f0c0119
+			public const int readjust = 2131493145;
 			
 			// aapt resource value: 0x7f0c0124
-			public const int recYes = 2131493156;
+			public const int recMaybe = 2131493156;
+			
+			// aapt resource value: 0x7f0c0123
+			public const int recNo = 2131493155;
+			
+			// aapt resource value: 0x7f0c0122
+			public const int recYes = 2131493154;
 			
 			// aapt resource value: 0x7f0c00c5
-			public const int receiveDataChooser = 2131493061;
+			public const int receiveDataSpinner = 2131493061;
 			
 			// aapt resource value: 0x7f0c00c0
 			public const int recentMatches = 2131493056;
 			
-			// aapt resource value: 0x7f0c0129
-			public const int resLoss = 2131493161;
-			
-			// aapt resource value: 0x7f0c012a
-			public const int resTie = 2131493162;
+			// aapt resource value: 0x7f0c0127
+			public const int resLoss = 2131493159;
 			
 			// aapt resource value: 0x7f0c0128
-			public const int resWin = 2131493160;
+			public const int resTie = 2131493160;
+			
+			// aapt resource value: 0x7f0c0126
+			public const int resWin = 2131493158;
 			
 			// aapt resource value: 0x7f0c0051
 			public const int right = 2131492945;
@@ -8845,8 +8832,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c00f9
 			public const int right_side = 2131493113;
 			
-			// aapt resource value: 0x7f0c011d
-			public const int rotationC = 2131493149;
+			// aapt resource value: 0x7f0c011b
+			public const int rotationC = 2131493147;
 			
 			// aapt resource value: 0x7f0c000c
 			public const int save_image_matrix = 2131492876;
@@ -8914,35 +8901,29 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0091
 			public const int select_dialog_listview = 2131493009;
 			
-			// aapt resource value: 0x7f0c0137
-			public const int sendDataChooser = 2131493175;
+			// aapt resource value: 0x7f0c0135
+			public const int sendDataChooser = 2131493173;
+			
+			// aapt resource value: 0x7f0c0132
+			public const int shellcontent_appbar = 2131493170;
 			
 			// aapt resource value: 0x7f0c0134
-			public const int shellcontent_appbar = 2131493172;
+			public const int shellcontent_scrollview = 2131493172;
 			
-			// aapt resource value: 0x7f0c0136
-			public const int shellcontent_scrollview = 2131493174;
-			
-			// aapt resource value: 0x7f0c0135
-			public const int shellcontent_toolbar = 2131493173;
+			// aapt resource value: 0x7f0c0133
+			public const int shellcontent_toolbar = 2131493171;
 			
 			// aapt resource value: 0x7f0c0111
 			public const int shoot = 2131493137;
 			
 			// aapt resource value: 0x7f0c0116
-			public const int shootBarely = 2131493142;
-			
-			// aapt resource value: 0x7f0c0118
-			public const int shootInitiation = 2131493144;
-			
-			// aapt resource value: 0x7f0c0119
-			public const int shootPort = 2131493145;
+			public const int shootInitiation = 2131493142;
 			
 			// aapt resource value: 0x7f0c0117
-			public const int shootTrench = 2131493143;
+			public const int shootPort = 2131493143;
 			
 			// aapt resource value: 0x7f0c0115
-			public const int shootWell = 2131493141;
+			public const int shootTrench = 2131493141;
 			
 			// aapt resource value: 0x7f0c007b
 			public const int shortcut = 2131492987;
@@ -9034,8 +9015,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0070
 			public const int textSpacerNoTitle = 2131492976;
 			
-			// aapt resource value: 0x7f0c013c
-			public const int textTeam = 2131493180;
+			// aapt resource value: 0x7f0c013a
+			public const int textTeam = 2131493178;
 			
 			// aapt resource value: 0x7f0c0107
 			public const int textTitle = 2131493127;
@@ -9055,8 +9036,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0015
 			public const int textinput_error = 2131492885;
 			
-			// aapt resource value: 0x7f0c0138
-			public const int textview = 2131493176;
+			// aapt resource value: 0x7f0c0136
+			public const int textview = 2131493174;
 			
 			// aapt resource value: 0x7f0c00fa
 			public const int time = 2131493114;
@@ -9106,8 +9087,8 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c009d
 			public const int txtEventName = 2131493021;
 			
-			// aapt resource value: 0x7f0c011f
-			public const int under = 2131493151;
+			// aapt resource value: 0x7f0c011d
+			public const int under = 2131493149;
 			
 			// aapt resource value: 0x7f0c0035
 			public const int uniform = 2131492917;
@@ -9133,14 +9114,14 @@ namespace CardinalScout2020
 			// aapt resource value: 0x7f0c0016
 			public const int view_offset_helper = 2131492886;
 			
-			// aapt resource value: 0x7f0c0144
-			public const int visible = 2131493188;
+			// aapt resource value: 0x7f0c0142
+			public const int visible = 2131493186;
 			
 			// aapt resource value: 0x7f0c00e7
 			public const int volume_item_container = 2131493095;
 			
-			// aapt resource value: 0x7f0c011c
-			public const int wheel = 2131493148;
+			// aapt resource value: 0x7f0c011a
+			public const int wheel = 2131493146;
 			
 			// aapt resource value: 0x7f0c0022
 			public const int wide = 2131492898;
@@ -9686,9 +9667,6 @@ namespace CardinalScout2020
 			
 			// aapt resource value: 0x7f09000f
 			public const int common_signin_button_text_long = 2131296271;
-			
-			// aapt resource value: 0x7f090051
-			public const int idConfirm = 2131296337;
 			
 			// aapt resource value: 0x7f090050
 			public const int instructions = 2131296336;

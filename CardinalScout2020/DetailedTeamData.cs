@@ -8,163 +8,129 @@ using System.Linq;
 
 namespace CardinalScout2020
 {
+    /// <summary>
+    /// This class displays detailed data for a team.
+    /// </summary>
     [Activity(Label = "DetailedTeamData", Theme = "@style/AppTheme", MainLauncher = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class DetailedTeamData: Activity
     {
-        //declare objects for controls
+        //Declare objects for controls.
         private GridView gridStats;
         private GridView gridAuto;
         private GridView gridMatches;
         private TextView textTitle;
         private LinearLayout linearMatches;
 
-        //placeholder for the current compiled data
+        //Placeholder for the current compiled data.
         private CompiledEventData currentCompiled;
-
-        private EventDatabase eData = new EventDatabase();
-
+       
+        /// <summary>
+        /// Initialize the activity.
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            //Set the correct screen.
             SetContentView(Resource.Layout.Team_Details);
-            //get controls from layout
+
+            //Get controls from layout.
             gridStats = FindViewById<GridView>(Resource.Id.gridViewStats);
             gridAuto = FindViewById<GridView>(Resource.Id.gridViewAuto);
             gridMatches = FindViewById<GridView>(Resource.Id.gridViewMatches);
             textTitle = FindViewById<TextView>(Resource.Id.textTeam);
             linearMatches = FindViewById<LinearLayout>(Resource.Id.linearMatches);
-            //get current compiled data
-            currentCompiled = eData.GetCurrentCompiled();
-            //put matches in order for team
-            CompiledEventData[] compiledPreSort = eData.GetCompiledEventDataForIndex(eData.getTeamIndex().ID).ToArray();
-            Array.Sort(compiledPreSort, delegate (CompiledEventData data1, CompiledEventData data2)
-            {
-                return data1.matchNumber.CompareTo(data2.matchNumber);
-            });
-            Array.Reverse(compiledPreSort);
-            List<CompiledEventData> compiled = compiledPreSort.ToList();
-            int currentTeam = compiled[0].teamNumber;
-            //display current team in the title
-            textTitle.TextFormatted = TextUtils.ConcatFormatted(FormatString.setNormal("Viewing Stats for Team: '"), FormatString.setBold(currentTeam.ToString()), FormatString.setNormal("'"));
-            //get team-specific details from compiled data                      
-            int shootPerc = currentCompiled.getShootPercentForTeam(currentTeam);
-            string prefPort = currentCompiled.getPrimaryPort(currentTeam);
-            string shootPos = currentCompiled.getPrimaryShoot(currentTeam);
-            int climbPerc = currentCompiled.getClimbPercentForTeam(currentTeam);
-            string climbAdj = currentCompiled.getAdjustForTeam(currentTeam).ToString();
-            bool rotation = currentCompiled.getWheelRotationForTeam(currentTeam);
-            bool position = currentCompiled.getWheelPositionForTeam(currentTeam);
-            int recPerc = currentCompiled.getRecPercentForTeam(currentTeam);
+            
+            //Get current compiled data.
+            currentCompiled = ScoutDatabase.GetCurrentCompiled();
 
-            int initiationPerc = currentCompiled.getInitiationLineForTeam(currentTeam);
-            int autoHighPerc = currentCompiled.getHighAutoForTeam(currentTeam);
-            int autoLowPerc = currentCompiled.getLowAutoForTeam(currentTeam);
-            int autoNonePerc = currentCompiled.getNoneAutoForTeam(currentTeam);
+            int currentTeam = currentCompiled.CurrentTeam;
+            //Display current team in the title.
+            textTitle.TextFormatted = TextUtils.ConcatFormatted(FormatString.SetNormal("Viewing Stats for Team: '"), FormatString.SetBold(currentTeam.ToString()), FormatString.SetNormal("'"));
+            
+            //Get team-specific details from compiled data.                    
+            SpannableString shootPerc = currentCompiled.GetShootPercentForTeamFormatted(currentTeam);
+            SpannableString prefPort = currentCompiled.GetPrimaryPortForTeamFormatted(currentTeam);
+            SpannableString shootPos = currentCompiled.GetLocationForTeamFormatted(currentTeam);
+            SpannableString climbPerc = currentCompiled.GetClimbForTeamFormatted(currentTeam);
+            SpannableString climbAdj = currentCompiled.GetAdjustForTeamFormatted(currentTeam);
+            SpannableString rotation = currentCompiled.GetWheelRotationForTeamFormatted(currentTeam);
+            SpannableString position = currentCompiled.GetWheelPositionForTeamFormatted(currentTeam);
+            SpannableString recPerc = currentCompiled.GetRecPercentForTeamFormatted(currentTeam);
+            SpannableString initiationPerc = currentCompiled.GetInitiationLineForTeamFormatted(currentTeam);
+            SpannableString autoHighPerc = currentCompiled.GetHighAutoForTeamFormatted(currentTeam);
+            SpannableString autoLowPerc = currentCompiled.GetLowAutoForTeamFormatted(currentTeam);
+            SpannableString autoNonePerc = currentCompiled.GetNoneAutoForTeamFormatted(currentTeam);
 
+            /*First Box*/
 
-            //first two rows
+            //Slash that will be used between certain properties.
+            SpannableString slash = FormatString.SetNormal(" / ");
+
+           
             List<SpannableString> statsDisp = new List<SpannableString>()
             {
-                FormatString.setNormal("Shoot % / Port / Location"),
-                FormatString.setNormal("Climb % / Adjust Climb"),
-                FormatString.setNormal("Rotation / Position"),
-                FormatString.setNormal("Recommendation %"),
+                FormatString.SetNormal("Shoot % / Port / Location"),
+                FormatString.SetNormal("Climb % / Adjust Climb"),
+                FormatString.SetNormal("Rotation / Position"),
+                FormatString.SetNormal("Recommendation %"),
 
-                FormatString.setBold(shootPerc.ToString()+"% / "+ prefPort + " / " + shootPos),
-                FormatString.setBold(climbPerc.ToString()+"% / "+ climbAdj),
-                FormatString.setBold(rotation.ToString() + " / " + position.ToString()),
-                FormatString.setBold(recPerc.ToString()+"%"),
             };
-            //third row (decide if a team is good based off calculations) 
-            //shooting
-            if (shootPerc >= Constants.shootThreshHigh)
-            {
-                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
-            }
-            else if (shootPerc <= Constants.shootThreshLow)
-            {
-                statsDisp.Add(FormatString.setColorBold("BAD", Constants.appRed));
-            }
-            else
-            {
-                statsDisp.Add(FormatString.setBold("Neutral"));
-            }
-            //what kind of climber
-            if (climbPerc >= Constants.climbThreshHigh)
-            {
-                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
-            }
-            else if (climbPerc <= Constants.climbThreshLow)
-            {
-                statsDisp.Add(FormatString.setColorBold("BAD", Constants.appRed));
-            }
-            else
-            {
-                statsDisp.Add(FormatString.setBold("Neutral"));
-            }
-            //color wheel
-            if (rotation || position)
-            {
-                statsDisp.Add(FormatString.setColorBold("GOOD", Constants.appGreen));
-            }
-            else
-            {
-                statsDisp.Add(FormatString.setBold("Neutral"));
-            }
-            //recommendation
-            if (recPerc >= Constants.recommendThreshHigh)
-            {
-                statsDisp.Add(FormatString.setColorBold("Recommended", Constants.appGreen));
-            }
-            else if (recPerc <= Constants.recommendThreshLow)
-            {
-                statsDisp.Add(FormatString.setColorBold("Not Recommended", Constants.appRed));
-            }
-            else
-            {
-                statsDisp.Add(FormatString.setColorBold("Possible Recommend", Constants.appYellow));
-            }
 
-            //display general stats in first grid box
+            //Format shooter data.
+            SpannableStringBuilder shootData = new SpannableStringBuilder(shootPerc);
+            shootData.Append(slash);
+            shootData.Append(prefPort);
+            shootData.Append(slash);
+            shootData.Append(shootPos);
+            statsDisp.Add(new SpannableString(shootData));
+
+            //Format climber data.
+            SpannableStringBuilder climbData = new SpannableStringBuilder(climbPerc);
+            climbData.Append(slash);
+            climbData.Append(climbAdj);
+            statsDisp.Add(new SpannableString(climbData));
+
+            //Format spinner data.
+            SpannableStringBuilder spinData = new SpannableStringBuilder(rotation);
+            spinData.Append(slash);
+            spinData.Append(position);
+            statsDisp.Add(new SpannableString(spinData));
+
+            statsDisp.Add(recPerc);       
+
+            //Display general stats in first grid box.
             ArrayAdapter gridStatsAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, statsDisp);
             gridStats.Adapter = gridStatsAdapt;
 
-            //autonomous display    
+            /*Second Box (Auto)*/
 
-            List<SpannableString> autoDisp = new List<SpannableString>();
+            List<SpannableString> autoDisp = new List<SpannableString>
+            {
+                FormatString.SetBold("Crossed Initiation Line"),
+                initiationPerc,
 
-            autoDisp.Add(FormatString.setBold("Crossed Initiation Line"));
-            if (initiationPerc >= Constants.initiationThreshHigh)
-                autoDisp.Add(FormatString.setColorBold(initiationPerc.ToString() + "% (GOOD)", Constants.appGreen));
-            else if (initiationPerc <= Constants.initiationThreshLow)
-                autoDisp.Add(FormatString.setColorBold(initiationPerc.ToString() + "% (GOOD)", Constants.appRed));
-            else
-                autoDisp.Add(FormatString.setBold(initiationPerc.ToString() + "%"));
+                FormatString.SetBold("Scored 0 Balls"),
+                autoNonePerc,
 
-            autoDisp.Add(FormatString.setBold("Scored 0 Balls"));
-            if (autoNonePerc >= Constants.autoNoneThresh)
-                autoDisp.Add(FormatString.setColorBold(autoNonePerc.ToString() + "% (BAD)", Constants.appRed));
-            else
-                autoDisp.Add(FormatString.setBold(autoNonePerc.ToString() + "%"));
+                FormatString.SetBold("Scored 1-3 Balls"),
+                autoLowPerc,
 
-            autoDisp.Add(FormatString.setBold("Scored 1-3 Balls"));
-            if (autoLowPerc + autoHighPerc >= Constants.autoBallThresh)
-                autoDisp.Add(FormatString.setColorBold(autoLowPerc.ToString() + "% (GOOD)", Constants.appGreen));
-            else
-                autoDisp.Add(FormatString.setBold(autoLowPerc.ToString() + "%"));
-
-            autoDisp.Add(FormatString.setBold("Scored 4+ Balls"));
-            if (autoHighPerc + autoLowPerc >= Constants.autoBallThresh)
-                autoDisp.Add(FormatString.setColorBold(autoHighPerc.ToString() + "% (GOOD)", Constants.appGreen));
-            else
-                autoDisp.Add(FormatString.setBold(autoHighPerc.ToString() + "%"));
+                FormatString.SetBold("Scored 4+ Balls"),
+                autoHighPerc
+            };
 
 
-            //display sandstorm stats in the second grid
+            //Display autonomous stats in the second box.
             ArrayAdapter gridSandstormAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, autoDisp);
             gridAuto.Adapter = gridSandstormAdapt;
 
-            //display a list of matches the team was in and the details from each one
+            /*Third box (matches)*/
+
+            //Get compiled data (matches) for the active team.            
+            List<CompiledEventData> compiled = currentCompiled.GetCompiledForTeam(currentTeam);
+
             string[] properties = new string[]
             {
                 "Result of Team's Alliance",
@@ -175,9 +141,7 @@ namespace CardinalScout2020
                 "Can Shoot",
                 "Outer Port",
                 "Inner Port",
-                "Lower Port",
-                "Shoots Well",
-                "Barely Shoots",
+                "Lower Port",               
                 "Shoots from Trench",
                 "Shoots from Initiation Line",
                 "Shoots from Against Power Port",
@@ -191,359 +155,334 @@ namespace CardinalScout2020
                 "Recommended"
             };
 
+            //Set the number of columns based on number of matches.
             gridMatches.NumColumns = compiled.Count + 1;
-            List<SpannableString> display = new List<SpannableString>();
-            compiled.Reverse();
-            //rows
+            List<SpannableString> display = new List<SpannableString>();            
+
+            //Rows.
             {
-                display.Add(FormatString.setBold("Match Number:"));
+                //Match number
+                display.Add(FormatString.SetBold("Match Number:"));
                 for (int i = 0; i < compiled.Count; i++)
                 {
-                    display.Add(FormatString.setBold(compiled[i].matchNumber.ToString()));
+                    display.Add(FormatString.SetBold(compiled[i].MatchNumber.ToString()));
                 }
                 int p = 0;
 
                 //Result
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].result == 0)
+                    if (compiled[j].Result == 0)
                     {
-                        display.Add(FormatString.setColor(compiled[j].getResult(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].GetResult(), Constants.appGreen));
                     }
-                    else if (compiled[j].result == 1)
+                    else if (compiled[j].Result == 1)
                     {
-                        display.Add(FormatString.setColor(compiled[j].getResult(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].GetResult(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].getResult(), Constants.appYellow));
+                        display.Add(FormatString.SetColor(compiled[j].GetResult(), Constants.appYellow));
                     }
                 }
                 p++;
 
                 //Position
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].position >= 3)
+                    if (compiled[j].DSPosition >= 3)
                     {
-                        display.Add(FormatString.setColor(compiled[j].getPosition(), Constants.appBlue));
+                        display.Add(FormatString.SetColor(compiled[j].GetPosition(), Constants.appBlue));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].getPosition(), Constants.appOrange));
+                        display.Add(FormatString.SetColor(compiled[j].GetPosition(), Constants.appOrange));
                     }
                 }
                 p++;
 
                 //Table
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].isTable)
+                    if (compiled[j].IsTable)
                     {
-                        display.Add(FormatString.setColorBold(compiled[j].isTable.ToString().ToUpper(), Constants.appRed));
+                        display.Add(FormatString.SetColorBold(compiled[j].IsTable.ToString().ToUpper(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].isTable.ToString().ToUpper(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].IsTable.ToString().ToUpper(), Constants.appGreen));
                     }
                 }
                 p++;
 
                 //Crossed Line
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].initiationCrossed)
+                    if (compiled[j].InitiationCrossed)
                     {
-                        display.Add(FormatString.setColor(compiled[j].initiationCrossed.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].InitiationCrossed.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].initiationCrossed.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].InitiationCrossed.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Auto
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].auto == 0)
+                    if (compiled[j].AutoResult == 0)
                     {
-                        display.Add(FormatString.setColor(compiled[j].getAuto(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].GetAuto(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].getAuto(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].GetAuto(), Constants.appGreen));
                     }
                 }
                 p++;
 
                 //Shoot
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shoot)
+                    if (compiled[j].Shoot)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shoot.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].Shoot.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shoot.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].Shoot.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Outer
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootOuter)
+                    if (compiled[j].ShootOuter)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootOuter.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootOuter.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootOuter.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootOuter.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Inner
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootInner)
+                    if (compiled[j].ShootInner)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootInner.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootInner.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootInner.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootInner.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Lower
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootLower)
+                    if (compiled[j].ShootLower)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootLower.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootLower.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootLower.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootLower.ToString(), Constants.appRed));
                     }
                 }
-                p++;
-
-                //Well
-                display.Add(FormatString.setBold(properties[p]));
-                for (int j = 0; j < compiled.Count; j++)
-                {
-                    if (compiled[j].shootWell)
-                    {
-                        display.Add(FormatString.setColor(compiled[j].shootWell.ToString(), Constants.appGreen));
-                    }
-                    else
-                    {
-                        display.Add(FormatString.setColor(compiled[j].shootWell.ToString(), Constants.appRed));
-                    }
-                }
-                p++;
-
-                //Barely
-                display.Add(FormatString.setBold(properties[p]));
-                for (int j = 0; j < compiled.Count; j++)
-                {
-                    if (compiled[j].shootBarely)
-                    {
-                        display.Add(FormatString.setColor(compiled[j].shootBarely.ToString(), Constants.appRed));
-                    }
-                    else
-                    {
-                        display.Add(FormatString.setColor(compiled[j].shootBarely.ToString(), Constants.appGreen));
-                    }
-                }
-                p++;
+                p++;                
 
                 //From Trench
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootTrench)
+                    if (compiled[j].ShootTrench)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootTrench.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootTrench.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootTrench.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootTrench.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //From Line
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootLine)
+                    if (compiled[j].ShootInitiation)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootLine.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootInitiation.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootLine.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootInitiation.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //From Port
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].shootPort)
+                    if (compiled[j].ShootPort)
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootPort.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].ShootPort.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].shootPort.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].ShootPort.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Climb
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].climb)
+                    if (compiled[j].Climb)
                     {
-                        display.Add(FormatString.setColor(compiled[j].climb.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].Climb.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].climb.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].Climb.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Adjust
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].adjustClimb)
+                    if (compiled[j].AdjustClimb)
                     {
-                        display.Add(FormatString.setColor(compiled[j].adjustClimb.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].AdjustClimb.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].adjustClimb.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].AdjustClimb.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Wheel
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].wheel)
+                    if (compiled[j].Wheel)
                     {
-                        display.Add(FormatString.setColor(compiled[j].wheel.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].Wheel.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].wheel.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].Wheel.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Rotation
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].rotationControl)
+                    if (compiled[j].RotationControl)
                     {
-                        display.Add(FormatString.setColor(compiled[j].rotationControl.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].RotationControl.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].rotationControl.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].RotationControl.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Position
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].positionControl)
+                    if (compiled[j].PositionControl)
                     {
-                        display.Add(FormatString.setColor(compiled[j].positionControl.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].PositionControl.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].positionControl.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].PositionControl.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Under Trench
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].underTrench)
+                    if (compiled[j].UnderTrench)
                     {
-                        display.Add(FormatString.setColor(compiled[j].underTrench.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].UnderTrench.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].underTrench.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].UnderTrench.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Good drivers
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].goodDrivers)
+                    if (compiled[j].GoodDrivers)
                     {
-                        display.Add(FormatString.setColor(compiled[j].goodDrivers.ToString(), Constants.appGreen));
+                        display.Add(FormatString.SetColor(compiled[j].GoodDrivers.ToString(), Constants.appGreen));
                     }
                     else
                     {
-                        display.Add(FormatString.setColor(compiled[j].goodDrivers.ToString(), Constants.appRed));
+                        display.Add(FormatString.SetColor(compiled[j].GoodDrivers.ToString(), Constants.appRed));
                     }
                 }
                 p++;
 
                 //Recommended
-                display.Add(FormatString.setBold(properties[p]));
+                display.Add(FormatString.SetBold(properties[p]));
                 for (int j = 0; j < compiled.Count; j++)
                 {
-                    if (compiled[j].wouldRecommend == 0)
+                    if (compiled[j].WouldRecommend == 0)
                     {
-                        display.Add(FormatString.setColorBold(compiled[j].getRecommendation(), Constants.appGreen));
+                        display.Add(FormatString.SetColorBold(compiled[j].GetRecommendation(), Constants.appGreen));
                     }
-                    else if (compiled[j].wouldRecommend == 1)
+                    else if (compiled[j].WouldRecommend == 1)
                     {
-                        display.Add(FormatString.setColorBold(compiled[j].getRecommendation(), Constants.appRed));
+                        display.Add(FormatString.SetColorBold(compiled[j].GetRecommendation(), Constants.appRed));
                     }
                     else
                     {
-                        display.Add(FormatString.setColorBold(compiled[j].getRecommendation(), Constants.appYellow));
+                        display.Add(FormatString.SetColorBold(compiled[j].GetRecommendation(), Constants.appYellow));
                     }
                 }
             }
-            //put matches in the third grid
+
+            //Put matches in the third grid.
             ArrayAdapter gridMatchesAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, display);
             gridMatches.Adapter = gridMatchesAdapt;
-            float scale = this.Resources.DisplayMetrics.Density;
+
+            //Adjust width of the matches grid.
+            float scale = Resources.DisplayMetrics.Density;
             FrameLayout.LayoutParams _params = new FrameLayout.LayoutParams((int)(compiled.Count * 500 * scale), Android.Views.ViewGroup.LayoutParams.WrapContent);
             linearMatches.LayoutParameters = _params;
         }

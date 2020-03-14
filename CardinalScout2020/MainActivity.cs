@@ -6,30 +6,37 @@ using System;
 
 namespace CardinalScout2020
 {
-    /*This is the home page for the app. It shows up first when the app is launched and contains buttons
-     * to go to other areas in the app*/
-
+    /// <summary>
+    /// This is the home page for the app. It shows up when the app is launched and contains buttons to navigate to other screens.
+    /// </summary>
     [Activity(Label = "Cardinal Scout", Theme = "@style/AppTheme", MainLauncher = true, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MainActivity: AppCompatActivity
     {
-        //declare objects to refer to controls
+        //Declare objects to refer to controls.
         private Button bViewPrev;
-
         private Button bSync;
         private Button bNewEvent;
         private Button bContinue;
         private Button bSettings;
 
-        //ImageView teamPhoto;
+        /// <summary>
+        /// Initialize the activity.
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);            
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            //uncomment this to reset database on launch
-            //DeleteDatabase(SQLite_android.getDatabasePath());
-            // Set our view from the "main" layout resource
+
+            ScoutDatabase.Initialize();
+
+            //UNCOMMENT THIS TO RESET APP AND DELETE DATABASE ON LAUNCH
+            //DeleteDatabase(SQLite_android.GetDatabasePath());
+
+            // Set our view from the "main" layout resource.
             SetContentView(Resource.Layout.Activity_Main);
-            //get controls and assign event handlers
+
+            //Get controls and assign event handlers.
             bViewPrev = FindViewById<Button>(Resource.Id.bViewPrev);
             bViewPrev.Click += ButtonClicked;
             bSync = FindViewById<Button>(Resource.Id.bSync);
@@ -43,10 +50,10 @@ namespace CardinalScout2020
             Xamarin.Forms.Forms.Init(this, savedInstanceState);
         }
 
-        //handle button clicks
+        //Handle button clicks.
         private void ButtonClicked(object sender, EventArgs e)
         {
-            //decide which button was pressed and start appropriate activity
+            //Decide which button was pressed and start the appropriate activity.
             if ((sender as Button) == bViewPrev)
             {
                 StartActivity(typeof(SelectEventCompiled));

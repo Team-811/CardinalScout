@@ -7,60 +7,68 @@ using static Android.Widget.AdapterView;
 
 namespace CardinalScout2020
 {
-    /*This class is for selecting which event to Scout for after clicking "Scout"*/
-
+    /// <summary>
+    /// This activity allows the user to choose which event they would like to scout for.
+    /// </summary>
     [Activity(Label = "SelectEventScout", Theme = "@style/AppTheme", MainLauncher = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class SelectEventScout: Activity
     {
-        //declare objects for controls
+        //Declare objects for controls.
         private ListView eventList;
-
         private Button bSelect;
 
-        //get database instance
-        private EventDatabase eData = new EventDatabase();
+        //Placeholder for selected event.
+        private Event selectedEvent;
 
+        /// <summary>
+        /// Initialize the activity.
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            //Set correct screen.
             SetContentView(Resource.Layout.Select_Event);
-            //get controls from layout and assign event handlers
+
+            //Get controls from layout and assign event handlers.
             eventList = FindViewById<ListView>(Resource.Id.chooseList);
             eventList.ItemClick += ListViewClick;
             bSelect = FindViewById<Button>(Resource.Id.bSelect);
             bSelect.Click += ButtonClicked;
-            //get a display list of events and adapt them to a ListView
-            var eventAdapter = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, eData.GetEventDisplayList());
+
+            //Get a display list of events and adapt them to a ListView.
+            var eventAdapter = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, ScoutDatabase.GetEventDisplayList());
             eventList.Adapter = eventAdapter;
         }
 
+        //Handle button clicks.
         private void ButtonClicked(object sender, EventArgs e)
         {
             try
             {
-                //decide which button was pressed
+                //Decide which button was pressed
                 if ((sender as Button) == bSelect)
                 {
-                    //set the current event and go to the scouting page
-                    eData.SetCurrentEvent(selectedEvent.eventID);
+                    //Set the current event and go to the scouting page.
+                    ScoutDatabase.SetCurrentEvent(selectedEvent.EventID);
                     StartActivity(typeof(ScoutLandingPage));
                 }
             }
-            //if no event is selected, it will throw an exception
+            //If no event is selected, it will throw an exception.
             catch
             {
                 Popup.Single("Alert", "Please select an event to scout", "OK", this);
             }
-        }
+        }        
 
-        private Event selectedEvent;
+        //Determine which event the user has selected.
         private int selectedIndex;
-
         private void ListViewClick(object sender, ItemClickEventArgs e)
         {
             selectedIndex = e.Position;
             //get the selected event based on the position in the event id list
-            selectedEvent = eData.GetEvent(eData.EventIDList()[selectedIndex]);
+            selectedEvent = ScoutDatabase.GetEventFromIndex(selectedIndex);
         }
     }
 }

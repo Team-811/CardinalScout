@@ -11,15 +11,14 @@ using static Android.Widget.AdapterView;
 
 namespace CardinalScout2020
 {
-    /*This activity assigns the current device as "master" and collects data from the other 5 devices by scanning their generated QR codes
-     * After gathering the data, it creates a new instance of the CompiledEventData class which contains the raw text from the QR codes*/
-
+    /// <summary>
+    /// This activity assigns the current device as "master" and collects data from the other 5 devices by scanning their generated QR codes. After gathering the data, it creates a new instance of the CompiledEventData class which contains the raw text from the QR codes and the data stored on the master device itself.
+    /// </summary>
     [Activity(Label = "MasterView", Theme = "@style/AppTheme", MainLauncher = false, ScreenOrientation = Android.Content.PM.ScreenOrientation.Portrait)]
     public class MasterView: Activity
     {
-        //declare objects for controls
+        //Declare objects for controls.
         private Spinner receiveDataSpinner;
-
         private Button b1p1;
         private Button b1p2;
         private Button b2p1;
@@ -30,16 +29,20 @@ namespace CardinalScout2020
         private Button b4p2;
         private Button b5p1;
         private Button b5p2;
-        private Button bCompile;
+        private Button bCompile;       
 
-        //get database instance
-        private EventDatabase eData = new EventDatabase();
-
+        /// <summary>
+        /// Initialize the activity.
+        /// </summary>
+        /// <param name="savedInstanceState"></param>
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
+
+            //Set the correct screen.
             SetContentView(Resource.Layout.Master_View);
-            //get controls and assign event handlers
+
+            //Get controls and assign event handlers.
             b1p1 = FindViewById<Button>(Resource.Id.b1p1);
             b1p1.Click += ButtonClicked;
             b1p2 = FindViewById<Button>(Resource.Id.b1p2);
@@ -61,132 +64,135 @@ namespace CardinalScout2020
             b5p2 = FindViewById<Button>(Resource.Id.b5p2);
             b5p2.Click += ButtonClicked;
             bCompile = FindViewById<Button>(Resource.Id.bCompile2);
-            bCompile.Click += compileData;
-            receiveDataSpinner = FindViewById<Spinner>(Resource.Id.receiveDataChooser);
+            bCompile.Click += CompileData;
+            receiveDataSpinner = FindViewById<Spinner>(Resource.Id.receiveDataSpinner);
             receiveDataSpinner.ItemSelected += SpinnerClick;
-            //create an adapter for the DropDown picker with event names to choose from
-            ArrayAdapter selectAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, eData.GetEventDisplayList());
+
+            //Create an adapter for the drop down picker with event names to choose from.
+            ArrayAdapter selectAdapt = new ArrayAdapter<SpannableString>(this, Android.Resource.Layout.SimpleListItem1, ScoutDatabase.GetEventDisplayList());
             receiveDataSpinner.Adapter = selectAdapt;
-            //initialize QR scanner class
+
+            //Initialize QR scanner class
             MobileBarcodeScanner.Initialize(Application);
         }
 
-        //placeholder button
+        //Placeholder button.
         private Button clickedButton;
-
+        //Handle button clicks.
         private async void ButtonClicked(object sender, EventArgs e)
         {
-            //remember which button was pressed
+            //Remember which button was pressed.
             clickedButton = sender as Button;
+
+            //Set up QR scanner.
             var scanner = new MobileBarcodeScanner();
-            var opt = new MobileBarcodeScanningOptions();
-            //make sure the scanner only looks for QR codes
-            opt.PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.QR_CODE };
+            var opt = new MobileBarcodeScanningOptions
+            {
+                //Make sure the scanner only looks for QR codes.
+                PossibleFormats = new List<BarcodeFormat> { BarcodeFormat.QR_CODE }
+            };
             scanner.TopText = "Hold the camera up to the QR Code";
             scanner.BottomText = "Wait for the QR Code to automatically scan!";
-            //This will start scanning
+
+            //This will start scanning.
             ZXing.Result result = await scanner.Scan();
+
             //Show the result returned.
             HandleResult(result);
         }
 
-        //create a string to store collected values
+        //Create a string to store collected values.
         private string concatedQR = null;
 
+        //Handle the scanned QR and add it to the collected data.
         private void HandleResult(ZXing.Result result)
         {
-            //default message
+            //Default message
             var msg = "Failed, Please try again";
-            //make sure the scanner detected a valid QR code
+
+            //Make sure the scanner detected a valid QR code
             if (result != null && result.BarcodeFormat == BarcodeFormat.QR_CODE)
             {
                 clickedButton.Text = "Success";
                 clickedButton.SetBackgroundColor(Color.Rgb(121, 234, 144));
-                //add result to the combined result string
+                
+                //Add scanned result to the combined result string
                 concatedQR += result.Text;
                 msg = result.Text;
-            }
-            //debug qr
-            //Popup.Single("Alert", msg, "OK", this);
+            }           
         }
-
-        //create a new CompiledEventData
-        private void compileData(object sender, EventArgs e)
+    
+        //Create a new CompiledEventData based on the scanned data.
+        private void CompileData(object sender, EventArgs e)
         {
             try
             {
                 bool isDuplicate = false;
-                //get a list of already existing CompiledEventData items
-                IEnumerable<CompiledEventData> currentData = eData.GetCompiledEventData();
-                foreach (CompiledEventData q in currentData)
+                //Get a list of already existing CompiledEventData items and make sure there aren't any duplicates.        
+                foreach (CompiledEventData q in ScoutDatabase.GetCompiledEventDataList())
                 {
-                    if (q.cID == selectedEvent.eventID)
+                    if (q.ID == selectedEvent.EventID)
                     {
                         isDuplicate = true;
                         break;
                     }
                 }
-                //add data from the master device
-                List<MatchData> scoutList = eData.GetMatchDataForEvent(selectedEvent.eventID);
+
+                //Add data from the master device.
+                List<MatchData> scoutList = ScoutDatabase.GetMatchDataForEvent(selectedEvent.EventID);
                 for (int i = 0; i < scoutList.Count; i++)
                 {
-                    concatedQR += scoutList[i].teamNumber.ToString() + "," +
-                        scoutList[i].matchNumber.ToString() + "," +
-                        scoutList[i].result.ToString() +
-                        scoutList[i].position.ToString() +
-                        Convert.ToByte(scoutList[i].isTable).ToString() +
-                        Convert.ToByte(scoutList[i].initiationCrossed).ToString() +
-                        scoutList[i].auto.ToString() +
-                        Convert.ToByte(scoutList[i].shoot).ToString() +
-                        Convert.ToByte(scoutList[i].shootOuter).ToString() +
-                        Convert.ToByte(scoutList[i].shootInner).ToString() +
-                        Convert.ToByte(scoutList[i].shootLower).ToString() +
-                        Convert.ToByte(scoutList[i].shootWell).ToString() +
-                        Convert.ToByte(scoutList[i].shootBarely).ToString() +
-                        Convert.ToByte(scoutList[i].shootTrench).ToString() +
-                        Convert.ToByte(scoutList[i].shootLine).ToString() +
-                        Convert.ToByte(scoutList[i].shootPort).ToString() +
-                        Convert.ToByte(scoutList[i].climb).ToString() +
-                        Convert.ToByte(scoutList[i].adjustClimb).ToString() +
-                        Convert.ToByte(scoutList[i].wheel).ToString() +
-                        Convert.ToByte(scoutList[i].rotationControl).ToString() +
-                        Convert.ToByte(scoutList[i].positionControl).ToString() +
-                        Convert.ToByte(scoutList[i].underTrench).ToString() +
-                        Convert.ToByte(scoutList[i].goodDrivers).ToString() +
-                        scoutList[i].wouldRecommend.ToString();
+                    concatedQR += scoutList[i].TeamNumber.ToString() + "," +
+                        scoutList[i].MatchNumber.ToString() + "," +
+                        scoutList[i].Result.ToString() +
+                        scoutList[i].DSPosition.ToString() +
+                        Convert.ToByte(scoutList[i].IsTable).ToString() +
+                        Convert.ToByte(scoutList[i].InitiationCrossed).ToString() +
+                        scoutList[i].AutoResult.ToString() +
+                        Convert.ToByte(scoutList[i].Shoot).ToString() +
+                        Convert.ToByte(scoutList[i].ShootOuter).ToString() +
+                        Convert.ToByte(scoutList[i].ShootInner).ToString() +
+                        Convert.ToByte(scoutList[i].ShootLower).ToString() +                       
+                        Convert.ToByte(scoutList[i].ShootTrench).ToString() +
+                        Convert.ToByte(scoutList[i].ShootInitiation).ToString() +
+                        Convert.ToByte(scoutList[i].ShootPort).ToString() +
+                        Convert.ToByte(scoutList[i].Climb).ToString() +
+                        Convert.ToByte(scoutList[i].AdjustClimb).ToString() +
+                        Convert.ToByte(scoutList[i].Wheel).ToString() +
+                        Convert.ToByte(scoutList[i].RotationControl).ToString() +
+                        Convert.ToByte(scoutList[i].PositionControl).ToString() +
+                        Convert.ToByte(scoutList[i].UnderTrench).ToString() +
+                        Convert.ToByte(scoutList[i].GoodDrivers).ToString() +
+                        scoutList[i].WouldRecommend.ToString();
                 }
-                //make sure there is some data
+
+                //Make sure there is some data.
                 if (concatedQR != null)
                 {
-                    //make sure it isnt a duplicate
+                    //Make sure it isn't a duplicate.
                     if (!isDuplicate)
                     {
-                        //create a new compiled event data and add it to the database
-                        CompiledEventData newCompilation = new CompiledEventData(selectedEvent.eventName, selectedEvent.startDate, selectedEvent.endDate, concatedQR, false, selectedEvent.eventID);
-                        eData.AddCompiledEventData(newCompilation);
-                        Popup.Single("Alert", "Successfully generated data for event '" + selectedEvent.eventName + "'.", "OK", this);
-                        //StartActivity(typeof(MainActivity));
-                        //Finish();
+                        //Create a new compiled event data and add it to the database.                        
+                        ScoutDatabase.AddCompiledEventData(new CompiledEventData(selectedEvent.EventName, selectedEvent.StartDate, selectedEvent.EndDate, concatedQR, selectedEvent.EventID));
+                        Popup.Single("Alert", "Successfully generated data for event '" + selectedEvent.EventName + "'.", "OK", this);                        
                     }
-                    //if it is a duplicate
+                    //If it is a duplicate.
                     else
                     {
                         Popup.Single("Alert", "Data for this event has already been generated on this device. " +
                             "Please delete it in 'View Data' from the home screen first if you want to generate new data", "OK", this);
-                        //reset, clear QR data, etc
-                        //this.Recreate();
+                        //Reset the data.
                         concatedQR = null;
                     }
                 }
-                //if the QR data is completely blank
+                //If the QR data is completely blank.
                 else
                 {
-                    Popup.Single("Alert", "No data collected, please start over", "OK", this);
-                    //reset
-                    //this.Recreate();
+                    Popup.Single("Alert", "No data collected, please start over", "OK", this);                    
                     concatedQR = null;
                 }
             }
+            //If no event has been selected.
             catch
             {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -201,15 +207,14 @@ namespace CardinalScout2020
             }
         }
 
-        //determine which event was selected and put it in the current event placeholder
+        //Determine which event was selected from and put it in the current event placeholder to be able to collect data from it.
         private int spinnerIndex;
-
         private Event selectedEvent;
 
         private void SpinnerClick(object sender, ItemSelectedEventArgs e)
         {
             spinnerIndex = e.Position;
-            selectedEvent = eData.GetEvent(eData.EventIDList()[spinnerIndex]);
+            selectedEvent = ScoutDatabase.GetEventFromIndex(spinnerIndex);
         }
     }
 }

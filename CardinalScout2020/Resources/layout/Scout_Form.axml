@@ -216,26 +216,7 @@ android:layout_height="match_parent">
             android:textSize="20sp"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="10dp" />
-			<CheckBox
-            android:text="Well"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/shootWell"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_marginLeft="25dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginBottom="10dp" />
-			<CheckBox
-            android:text="Barely"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/shootBarely"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:layout_marginLeft="25dp"            
-            android:layout_marginBottom="10dp" />
+            android:layout_marginBottom="10dp" />			
 			<CheckBox
             android:text="Shoot from trench"
             android:layout_width="wrap_content"

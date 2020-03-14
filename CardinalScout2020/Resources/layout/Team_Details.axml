@@ -62,7 +62,7 @@ android:layout_height="match_parent">
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".3"
+        android:layout_weight=".2"
         android:id="@+id/linearLayout1">
           <TextView
           android:text="General Stats:"
@@ -148,7 +148,7 @@ android:layout_height="match_parent">
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight=".35"
+        android:layout_weight=".45"
         android:id="@+id/linearLayout1">
           <TextView
           android:text="Matches:"

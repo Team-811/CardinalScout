@@ -11,11 +11,11 @@ using Android.App;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Cardinal Scout")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: ComVisible(false)]
-[assembly: Application(Icon = "@drawable/icon")]
+[assembly: Application(Icon = "@drawable/icon20")]
 
 // Version information for an assembly consists of the following four values:
 //

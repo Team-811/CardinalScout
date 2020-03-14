@@ -42,6 +42,7 @@
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidCreatePackagePerAbi>true</AndroidCreatePackagePerAbi>
     <EnableProguard>true</EnableProguard>
+    <DocumentationFile>bin\Debug\CardinalScout2020.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -71,13 +72,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompiledEventData.cs" />
-    <Compile Include="CompiledTeamIndex.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="CreateEvent.cs" />
-    <Compile Include="Data\SQLite_android.cs" />
+    <Compile Include="SQLite_android.cs" />
     <Compile Include="EditEvents.cs" />
     <Compile Include="Event.cs" />
-    <Compile Include="EventDatabase.cs" />
+    <Compile Include="ScoutDatabase.cs" />
     <Compile Include="EventID.cs" />
     <Compile Include="FormatString.cs" />
     <Compile Include="Popup.cs" />
@@ -234,6 +234,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\icon20.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
